@@ -104,7 +104,20 @@
         <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">GSAP</p></div></li>
       </ul>
     </section>
-    <section id="contacto" data-bg="wine" class="min-h-screen"></section>
+    <section id="contacto" data-bg="wine" class="min-h-screen bg-wine text-cream flex flex-col px-6 pt-24">
+      <div class="flex flex-1 flex-col items-center justify-center text-center">
+        <h2 id="contacto-frase" class="font-display text-4xl md:text-6xl font-bold max-w-3xl leading-tight mb-12">Las grandes ideas empiezan en conversación</h2>
+        <div id="contacto-botones" class="flex w-full max-w-md flex-col items-stretch gap-4 md:max-w-none md:w-auto md:flex-row md:items-center">
+          <a id="contacto-correo" href="mailto:CORREO_PENDIENTE" class="contacto-boton rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">Correo</a>
+          <a id="contacto-whatsapp" href="https://wa.me/WHATSAPP_PENDIENTE" target="_blank" rel="noopener noreferrer" class="contacto-boton rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">WhatsApp</a>
+          <a id="contacto-cv" role="link" aria-disabled="true" tabindex="-1" class="contacto-boton contacto-cv rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center opacity-50 pointer-events-none">Descargar CV</a>
+        </div>
+      </div>
+      <footer class="mt-16 flex flex-col items-center justify-between gap-2 border-t border-cream/30 py-6 text-sm sm:flex-row">
+        <p>&copy; <span id="contacto-anio">2026</span> Saray.dev</p>
+        <a href="https://github.com/SarayOrtizCordero" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 hover:text-ink">GitHub</a>
+      </footer>
+    </section>
   </main>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -116,5 +129,6 @@
   <script src="js/services.js"></script>
   <script src="js/projects.js"></script>
   <script src="js/tech.js"></script>
+  <script src="js/contact.js"></script>
 </body>
 </html>
