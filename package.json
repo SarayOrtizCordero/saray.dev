@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-saray",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolio web de Saray (HTML + Tailwind + GSAP + Lenis)",
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i ./src/input.css -o ./css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
