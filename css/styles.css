@@ -29,3 +29,19 @@ body {
   aspect-ratio: 3 / 4;
   z-index: 5;
 }
+
+/* Servicios: perspectiva para la rotación 3D y inclinación base (solo escritorio) */
+.servicios-lista {
+  perspective: 1200px;
+}
+
+.service-card {
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .service-card:nth-child(1) { transform: rotate(-6deg); }
+  .service-card:nth-child(2) { transform: rotate(-2deg); }
+  .service-card:nth-child(3) { transform: rotate(2deg); }
+  .service-card:nth-child(4) { transform: rotate(6deg); }
+}

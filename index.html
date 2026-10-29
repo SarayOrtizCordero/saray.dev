@@ -54,8 +54,38 @@
         <a id="hero-boton" href="#contacto" class="rounded-full bg-wine text-cream font-medium px-8 py-3 hover:brightness-110">Contactar</a>
       </div>
     </section>
-    <section id="sobre-mi" data-bg="cream" class="min-h-screen"></section>
-    <section id="servicios" data-bg="cream" class="min-h-screen"></section>
+    <section id="sobre-mi" data-bg="cream" class="min-h-screen flex flex-col items-center justify-center px-6 py-24 text-center text-ink">
+      <h2 class="font-display text-4xl md:text-5xl font-bold mb-8">Sobre mí</h2>
+      <p class="max-w-2xl text-lg md:text-2xl leading-relaxed">
+        Soy Saray, desarrolladora web full stack junior. Me gusta convertir las necesidades de un negocio en webs, landings, CRMs y paneles de inventario que sean claros, cuidados y fáciles de usar. Trabajo cerca de cada cliente para entender qué necesita de verdad y construirlo paso a paso.
+      </p>
+      <a id="sobre-mi-boton" href="#servicios" class="mt-10 rounded-full bg-ink text-cream font-medium px-8 py-3 hover:bg-wine">Más sobre mí</a>
+    </section>
+    <section id="servicios" data-bg="cream" class="min-h-screen flex flex-col items-center justify-center px-6 py-24 text-ink">
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-center mb-14">¿En qué puedo ayudarte?</h2>
+      <div id="servicios-lista" class="servicios-lista grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
+          <svg class="h-10 w-10 text-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>
+          <h3 class="font-display text-xl font-semibold">Webs y landings</h3>
+          <p class="text-cream/80 leading-relaxed">Sitios claros y rápidos que presentan tu negocio y convierten visitas en clientes.</p>
+        </article>
+        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
+          <svg class="h-10 w-10 text-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M17 11a3 3 0 1 0 0-6M21.5 20c0-2.6-1.6-4.6-4-5.4"/></svg>
+          <h3 class="font-display text-xl font-semibold">Sistemas a medida (CRM)</h3>
+          <p class="text-cream/80 leading-relaxed">Herramientas para gestionar tus clientes y tu día a día sin hojas de cálculo interminables.</p>
+        </article>
+        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
+          <svg class="h-10 w-10 text-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg>
+          <h3 class="font-display text-xl font-semibold">Paneles de inventario</h3>
+          <p class="text-cream/80 leading-relaxed">Controla tu stock, entradas y salidas en un panel sencillo y siempre actualizado.</p>
+        </article>
+        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
+          <svg class="h-10 w-10 text-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="13" height="10" rx="1.5"/><path d="M6 19h6M9 15v4"/><rect x="17" y="9" width="4.5" height="10" rx="1.2"/></svg>
+          <h3 class="font-display text-xl font-semibold">Diseño responsive</h3>
+          <p class="text-cream/80 leading-relaxed">Una web que se ve y funciona bien en móvil, tablet y ordenador.</p>
+        </article>
+      </div>
+    </section>
     <section id="proyectos" data-bg="cream" class="min-h-screen"></section>
     <section id="tecnologias" data-bg="ink" class="min-h-screen"></section>
     <section id="contacto" data-bg="wine" class="min-h-screen"></section>
@@ -67,5 +97,6 @@
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
   <script src="js/hero.js"></script>
+  <script src="js/services.js"></script>
 </body>
 </html>
