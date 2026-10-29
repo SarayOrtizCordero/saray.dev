@@ -12,3 +12,20 @@ body {
     transition: none;
   }
 }
+
+/* Hero */
+.hero-nombre {
+  font-size: clamp(8rem, 28vw, 26rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: rgba(38, 38, 42, 0.12);
+  white-space: nowrap;
+  margin-top: auto;
+}
+
+.hero-foto {
+  width: clamp(12rem, 24vw, 22rem);
+  aspect-ratio: 3 / 4;
+  z-index: 5;
+}
