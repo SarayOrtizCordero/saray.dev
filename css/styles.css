@@ -74,3 +74,21 @@ body {
   .project-card:nth-child(6n+5) { transform: rotate(-2deg); margin-top: 2.5rem; }
   .project-card:nth-child(6n+6) { transform: rotate(1.5deg); }
 }
+
+/* Tecnologías: polaroids con inclinación fija (la animación solo añade la caída) */
+.tech-tile {
+  will-change: transform;
+}
+
+.tech-tile-inner {
+  will-change: transform;
+}
+
+.tech-tile:nth-child(1) { transform: rotate(-5deg); }
+.tech-tile:nth-child(2) { transform: rotate(3deg); }
+.tech-tile:nth-child(3) { transform: rotate(-2deg); }
+.tech-tile:nth-child(4) { transform: rotate(6deg); }
+.tech-tile:nth-child(5) { transform: rotate(4deg); }
+.tech-tile:nth-child(6) { transform: rotate(-6deg); }
+.tech-tile:nth-child(7) { transform: rotate(2deg); }
+.tech-tile:nth-child(8) { transform: rotate(-4deg); }
