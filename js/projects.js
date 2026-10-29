@@ -3,13 +3,14 @@ function renderProjects(list) {
   if (!container || !Array.isArray(list)) return;
   container.textContent = '';
 
-  function link(href, label, classes) {
+  function link(href, label, classes, aria) {
     var a = document.createElement('a');
     a.href = href;
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
     a.className = classes;
     a.textContent = label;
+    a.setAttribute('aria-label', aria);
     return a;
   }
 
@@ -21,6 +22,7 @@ function renderProjects(list) {
     var ph = document.createElement('div');
     ph.className = 'project-image flex aspect-video w-full items-center justify-center rounded-2xl border-2 border-dashed border-cream/40 bg-cream/10 px-4 text-center font-display text-xl font-semibold text-cream';
     ph.textContent = p.name;
+    ph.setAttribute('aria-hidden', 'true');
     card.appendChild(ph);
 
     var type = document.createElement('p');
@@ -41,9 +43,9 @@ function renderProjects(list) {
     var links = document.createElement('div');
     links.className = 'mt-auto flex flex-wrap gap-3 pt-2';
     if (p.demo) {
-      links.appendChild(link(p.demo, 'Ver demo', 'rounded-full bg-wine px-5 py-2 text-sm font-medium text-cream hover:brightness-110'));
+      links.appendChild(link(p.demo, 'Ver demo', 'rounded-full bg-wine px-5 py-2 text-sm font-medium text-cream hover:brightness-110', 'Ver demo de ' + p.name + ' (se abre en una pestaña nueva)'));
     }
-    links.appendChild(link(p.code, 'Ver código', 'rounded-full border border-cream/50 px-5 py-2 text-sm font-medium text-cream hover:bg-cream hover:text-ink'));
+    links.appendChild(link(p.code, 'Ver código', 'rounded-full border border-cream/50 px-5 py-2 text-sm font-medium text-cream hover:bg-cream hover:text-ink', 'Ver código de ' + p.name + ' en GitHub (se abre en una pestaña nueva)'));
     card.appendChild(links);
 
     container.appendChild(card);
@@ -63,12 +65,14 @@ function initProjects() {
 
   // Escritorio y tablet: flotado suave, profundidad con el scroll y desenfoque breve
   mm.add('(min-width: 768px)', function () {
-    var depths = [-60, 40, -30, 60, -50, 30];
+    // Misma amplitud para todas las tarjetas de una columna: así nunca se solapan entre sí
+    var cols = getComputedStyle(cards[0].parentNode).gridTemplateColumns.split(' ').length || 1;
+    var depths = [8, -6, 4];
 
     cards.forEach(function (card, i) {
       // flotado continuo (y) distinto por tarjeta
       gsap.to(card, {
-        y: (i % 2 ? -1 : 1) * 12,
+        y: ((i % cols) % 2 ? -1 : 1) * 8,
         duration: 2.4 + (i % 3) * 0.5,
         ease: 'sine.inOut',
         yoyo: true,
@@ -78,9 +82,9 @@ function initProjects() {
 
       // profundidad según scroll (yPercent, no choca con el flotado)
       gsap.fromTo(card,
-        { yPercent: depths[i % depths.length] * 0.5 },
+        { yPercent: depths[(i % cols) % depths.length] },
         {
-          yPercent: -depths[i % depths.length] * 0.5,
+          yPercent: -depths[(i % cols) % depths.length],
           ease: 'none',
           scrollTrigger: { trigger: '#proyectos', start: 'top bottom', end: 'bottom top', scrub: true }
         });

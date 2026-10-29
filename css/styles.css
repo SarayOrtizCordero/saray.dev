@@ -3,8 +3,18 @@ body {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 
-#menu a {
-  text-decoration: none;
+/* Foco visible: vino sobre fondos claros, crema sobre fondos oscuros */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #9E1030;
+  outline-offset: 3px;
+}
+
+#menu :focus-visible,
+.project-card :focus-visible,
+#tecnologias :focus-visible,
+#contacto :focus-visible {
+  outline-color: #F1E8DF;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -15,7 +25,7 @@ body {
 
 /* Hero */
 .hero-nombre {
-  font-size: clamp(8rem, 28vw, 26rem);
+  font-size: clamp(5rem, 28vw, 26rem);
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.04em;

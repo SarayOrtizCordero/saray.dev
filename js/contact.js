@@ -8,7 +8,11 @@ function initContact() {
   var anio = document.getElementById('contacto-anio');
 
   if (correo && data.email) correo.setAttribute('href', 'mailto:' + data.email);
-  if (whatsapp && data.whatsapp) whatsapp.setAttribute('href', 'https://wa.me/' + data.whatsapp);
+  if (whatsapp && data.whatsapp) {
+    // wa.me solo admite dígitos; el marcador pendiente se deja tal cual
+    var numero = data.whatsapp === 'WHATSAPP_PENDIENTE' ? data.whatsapp : String(data.whatsapp).replace(/\D/g, '');
+    if (numero) whatsapp.setAttribute('href', 'https://wa.me/' + numero);
+  }
   if (anio) anio.textContent = new Date().getFullYear();
 
   if (cv) {
