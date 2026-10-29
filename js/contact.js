@@ -7,32 +7,31 @@ function initContact() {
   var cv = document.getElementById('contacto-cv');
   var anio = document.getElementById('contacto-anio');
 
-  if (correo && data.email) correo.setAttribute('href', 'mailto:' + data.email);
-  if (whatsapp && data.whatsapp) {
-    // wa.me solo admite dígitos; el marcador pendiente se deja tal cual
-    var numero = data.whatsapp === 'WHATSAPP_PENDIENTE' ? data.whatsapp : String(data.whatsapp).replace(/\D/g, '');
-    if (numero) whatsapp.setAttribute('href', 'https://wa.me/' + numero);
+  // Los botones sin dato real siguen ocultos (clase hidden en el HTML) hasta que haya valor
+  if (correo && data.email && data.email !== 'CORREO_PENDIENTE') {
+    correo.setAttribute('href', 'mailto:' + data.email);
+    correo.classList.remove('hidden');
+  }
+  if (whatsapp && data.whatsapp && data.whatsapp !== 'WHATSAPP_PENDIENTE') {
+    // wa.me solo admite dígitos
+    var numero = String(data.whatsapp).replace(/\D/g, '');
+    if (numero) {
+      whatsapp.setAttribute('href', 'https://wa.me/' + numero);
+      whatsapp.classList.remove('hidden');
+    }
   }
   if (anio) anio.textContent = new Date().getFullYear();
 
-  if (cv) {
-    if (data.cvEnabled) {
-      cv.setAttribute('href', 'assets/cv.pdf');
-      cv.removeAttribute('aria-disabled');
-      cv.removeAttribute('tabindex');
-      cv.removeAttribute('role');
-      cv.classList.remove('opacity-50', 'pointer-events-none');
-    } else {
-      cv.removeAttribute('href');
-      cv.setAttribute('aria-disabled', 'true');
-    }
+  if (cv && data.cvEnabled) {
+    cv.setAttribute('href', 'assets/cv.pdf');
+    cv.classList.remove('hidden');
   }
 
   if (window.reduceMotion) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
   var frase = document.getElementById('contacto-frase');
-  var botones = gsap.utils.toArray('.contacto-boton');
+  var botones = gsap.utils.toArray('.contacto-boton:not(.hidden)');
   if (!frase) return;
 
   gsap.from(frase, {
@@ -42,7 +41,6 @@ function initContact() {
     ease: 'power3.out',
     scrollTrigger: { trigger: '#contacto', start: 'top 60%', once: true }
   });
-  // El CV desactivado conserva su opacidad atenuada: solo se anima la posición
   gsap.from(botones, {
     y: 30,
     duration: 0.8,

@@ -23,8 +23,8 @@
   ];
 
   window.CONTACT = {
-    email: 'CORREO_PENDIENTE',
-    whatsapp: 'WHATSAPP_PENDIENTE',
+    email: 'sarayortizcordero4@gmail.com',
+    whatsapp: '+34 675 84 36 55',
     cvEnabled: false
   };
 })();

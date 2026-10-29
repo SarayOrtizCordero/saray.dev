@@ -1,4 +1,13 @@
-/* El color de fondo lo cambia main.js intercambiando clases bg-* (tokens de Tailwind). */
+/* Paleta: ink #26262A · wine #9E1030 · cream #F1E8DF · kraft #E0D0BE.
+   El color de fondo del body lo cambia main.js intercambiando clases bg-* (tokens de Tailwind). */
+:root {
+  --ink: #26262A;
+  --wine: #9E1030;
+  --cream: #F1E8DF;
+  --kraft: #E0D0BE;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 body {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
@@ -6,24 +15,23 @@ body {
 /* Foco visible: vino sobre fondos claros, crema sobre fondos oscuros */
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid #9E1030;
+  outline: 2px solid var(--wine);
   outline-offset: 3px;
 }
 
 #menu :focus-visible,
-.project-card :focus-visible,
+.ticket :focus-visible,
+#proceso :focus-visible,
 #tecnologias :focus-visible,
 #contacto :focus-visible {
-  outline-color: #F1E8DF;
+  outline-color: var(--cream);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  body {
-    transition: none;
-  }
+.servicio:hover :focus-visible {
+  outline-color: var(--cream);
 }
 
-/* Hero */
+/* ---------- Hero ---------- */
 .hero-nombre {
   font-size: clamp(5rem, 28vw, 26rem);
   font-weight: 800;
@@ -40,7 +48,6 @@ button:focus-visible {
 }
 
 .hero-foto {
-  /* alto: el menor entre el tamaño deseado (3:4 de hasta 22rem de ancho) y la banda disponible */
   height: min(100%, calc(clamp(12rem, 24vw, 22rem) * 4 / 3));
   aspect-ratio: 3 / 4;
   z-index: 5;
@@ -52,23 +59,240 @@ button:focus-visible {
   }
 }
 
-/* Servicios: perspectiva para la rotación 3D y inclinación base (solo escritorio) */
-.servicios-lista {
-  perspective: 1200px;
+/* Sello giratorio: el exterior lo mueve GSAP (entrada y scroll), el interior gira por CSS */
+.hero-sello {
+  position: absolute;
+  z-index: 8;
+  width: clamp(5.5rem, 12vw, 9rem);
+  right: clamp(0.75rem, 8vw, 9rem);
+  bottom: clamp(9rem, 26vh, 15rem);
 }
 
-.service-card {
+.sello-giro {
+  display: block;
+  width: 100%;
+  animation: giro 22s linear infinite;
+}
+
+@keyframes giro {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Texto dividido (js/motion.js): cada palabra es una máscara ---------- */
+.sp-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.12em 0 0.2em;
+  margin: -0.12em 0 -0.2em;
+}
+
+.sp-inner,
+.sp-char {
+  display: inline-block;
   will-change: transform;
 }
 
-@media (min-width: 768px) {
-  .service-card:nth-child(1) { transform: rotate(-6deg); }
-  .service-card:nth-child(2) { transform: rotate(-2deg); }
-  .service-card:nth-child(3) { transform: rotate(2deg); }
-  .service-card:nth-child(4) { transform: rotate(6deg); }
+/* ---------- Menú: se oculta al bajar. `translate` se suma al transform de Tailwind. ---------- */
+#menu {
+  transition: translate 0.45s var(--ease-out);
 }
 
-/* Proyectos */
+#menu.menu-oculto {
+  translate: 0 -170%;
+}
+
+/* ---------- Barra de progreso ---------- */
+#progreso {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: var(--wine);
+  transform-origin: left center;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+/* ---------- Sobre mí: ficha de papel kraft con cinta ---------- */
+.ficha {
+  position: relative;
+  padding: 2.5rem 2rem 2rem;
+  background: var(--kraft);
+  border-radius: 0.25rem;
+  rotate: 2.5deg;
+  transition: rotate 0.5s var(--ease-out);
+}
+
+.ficha::before {
+  content: "";
+  position: absolute;
+  top: -0.9rem;
+  left: 50%;
+  width: 6.5rem;
+  height: 1.8rem;
+  translate: -50% 0;
+  rotate: -3deg;
+  background: rgba(158, 16, 48, 0.78);
+}
+
+@media (hover: hover) {
+  .ficha:hover { rotate: 0deg; }
+}
+
+/* ---------- Servicios: índice tipográfico con relleno al pasar ---------- */
+.servicio {
+  position: relative;
+  display: grid;
+  gap: 0.75rem 2rem;
+  padding: 2rem 0;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.4s ease;
+}
+
+.servicio:last-child {
+  border-bottom: 1px solid rgba(38, 38, 42, 0.35);
+}
+
+.servicio::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--wine);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s var(--ease-out);
+}
+
+.servicio-linea {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: rgba(38, 38, 42, 0.35);
+  transform-origin: left center;
+}
+
+.servicio-titulo {
+  font-size: clamp(2rem, 5.2vw, 4.25rem);
+  line-height: 1;
+}
+
+.servicio-texto {
+  max-width: 28rem;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.servicio-icono {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  transition: rotate 0.5s var(--ease-out);
+}
+
+@media (min-width: 768px) {
+  .servicio {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 2.5rem 1.5rem;
+  }
+  .servicio-icono { display: block; }
+}
+
+@media (hover: hover) {
+  .servicio:hover { color: var(--cream); }
+  .servicio:hover::before { transform: scaleY(1); }
+}
+
+/* ---------- Proceso: línea que se dibuja con el scroll ---------- */
+.proceso-linea-fondo {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: 0.75rem;
+  width: 2px;
+  background: rgba(241, 232, 223, 0.16);
+}
+
+.proceso-linea {
+  width: 100%;
+  height: 100%;
+  background: var(--cream);
+  transform-origin: top center;
+}
+
+.paso {
+  position: relative;
+  padding-left: 3.25rem;
+}
+
+.paso-punto {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.75rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  translate: -50% 0;
+  border-radius: 999px;
+  background: var(--ink);
+  border: 2px solid rgba(241, 232, 223, 0.35);
+  transition: background-color 0.4s ease, border-color 0.4s ease, scale 0.4s var(--ease-out);
+}
+
+.paso.activo .paso-punto {
+  background: var(--wine);
+  border-color: var(--cream);
+  scale: 1.35;
+}
+
+.paso-num {
+  display: block;
+  font-size: clamp(5rem, 14vw, 9rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  /* relleno tenue en vez de contorno: la fuente variable deja líneas internas visibles al trazar */
+  color: rgba(241, 232, 223, 0.16);
+  margin-bottom: 0.5rem;
+  transition: color 0.5s ease;
+}
+
+.paso.activo .paso-num {
+  color: var(--cream);
+}
+
+.paso-texto {
+  margin-top: 0.75rem;
+  max-width: 24rem;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: rgba(241, 232, 223, 0.85);
+}
+
+@media (min-width: 768px) {
+  .proceso-linea-fondo { left: 50%; translate: -50% 0; }
+
+  .paso {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-left: 0;
+  }
+  .paso-punto { left: 50%; }
+  .paso:nth-child(odd) .paso-cuerpo {
+    grid-column: 1;
+    padding-right: 4rem;
+    text-align: right;
+  }
+  .paso:nth-child(odd) .paso-texto { margin-left: auto; }
+  .paso:nth-child(even) .paso-cuerpo {
+    grid-column: 2;
+    padding-left: 4rem;
+  }
+}
+
+/* ---------- Proyectos: entradas tipo ticket ---------- */
 .proyectos-fondo {
   position: absolute;
   top: 2rem;
@@ -84,33 +308,369 @@ button:focus-visible {
   z-index: 0;
 }
 
+.ticket {
+  --tono: var(--ink);
+  --texto: var(--cream);
+  --sello-bg: var(--cream);
+  --sello-fg: var(--wine);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 2rem;
+  background: var(--tono);
+  color: var(--texto);
+  border-radius: 0.5rem;
+  /* borde inferior en dientes de sierra, como un recibo arrancado */
+  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 20px 10px repeat-x;
+  mask: linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 20px 10px repeat-x;
+}
+
+.ticket:nth-child(3n + 2) {
+  --tono: var(--wine);
+  --sello-bg: var(--cream);
+  --sello-fg: var(--ink);
+}
+
+.ticket:nth-child(3n) {
+  --tono: var(--kraft);
+  --texto: var(--ink);
+  --sello-bg: var(--wine);
+  --sello-fg: var(--cream);
+}
+
+.ticket-img {
+  position: relative;
+  display: flex;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: repeating-linear-gradient(135deg, rgba(128, 128, 128, 0.18) 0 10px, rgba(128, 128, 128, 0.06) 10px 20px);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  padding: 1rem;
+}
+
+img.ticket-img {
+  object-fit: cover;
+  padding: 0;
+}
+
+.ticket-sello {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: flex;
+  width: 5.75rem;
+  height: 5.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 999px;
+  background: var(--sello-bg);
+  color: var(--sello-fg);
+  outline: 1.5px dashed currentColor;
+  outline-offset: -5px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  rotate: 12deg;
+  transition: rotate 0.5s var(--ease-out);
+}
+
+/* línea de corte con muescas semicirculares: el color de las muescas es el del fondo de la sección */
+.ticket-corte {
+  position: relative;
+  height: 0;
+  margin: 1.25rem -1.25rem;
+  border-top: 2px dashed color-mix(in srgb, currentColor 55%, transparent);
+}
+
+.ticket-corte::before,
+.ticket-corte::after {
+  content: "";
+  position: absolute;
+  top: -13px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--cream);
+}
+
+.ticket-corte::before { left: -12px; }
+.ticket-corte::after { right: -12px; }
+
+.ticket-nombre {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.ticket-desc {
+  margin-top: 0.75rem;
+  line-height: 1.5;
+  opacity: 0.88;
+}
+
 .project-card {
   will-change: transform;
 }
 
 @media (min-width: 768px) {
-  .project-card:nth-child(6n+1) { transform: rotate(-3deg); }
-  .project-card:nth-child(6n+2) { transform: rotate(2deg); margin-top: 2.5rem; }
-  .project-card:nth-child(6n+3) { transform: rotate(-1.5deg); }
-  .project-card:nth-child(6n+4) { transform: rotate(3deg); }
-  .project-card:nth-child(6n+5) { transform: rotate(-2deg); margin-top: 2.5rem; }
-  .project-card:nth-child(6n+6) { transform: rotate(1.5deg); }
+  .project-card:nth-child(6n+1) { rotate: -2.5deg; }
+  .project-card:nth-child(6n+2) { rotate: 1.8deg; margin-top: 2.5rem; }
+  .project-card:nth-child(6n+3) { rotate: -1.2deg; }
+  .project-card:nth-child(6n+4) { rotate: 2.5deg; }
+  .project-card:nth-child(6n+5) { rotate: -1.8deg; margin-top: 2.5rem; }
+  .project-card:nth-child(6n+6) { rotate: 1.2deg; }
+  .project-card { transition: rotate 0.5s var(--ease-out); }
 }
 
-/* Tecnologías: polaroids con inclinación fija (la animación solo añade la caída) */
-.tech-tile {
-  will-change: transform;
+@media (min-width: 768px) and (hover: hover) {
+  .project-card:hover .ticket-sello { rotate: -8deg; }
 }
 
-.tech-tile-inner {
-  will-change: transform;
+/* "Ver más": que .hidden de Tailwind gane siempre a display:flex de .ticket, sin depender del orden de carga */
+.project-card.hidden {
+  display: none;
 }
 
-.tech-tile:nth-child(1) { transform: rotate(-5deg); }
-.tech-tile:nth-child(2) { transform: rotate(3deg); }
-.tech-tile:nth-child(3) { transform: rotate(-2deg); }
-.tech-tile:nth-child(4) { transform: rotate(6deg); }
-.tech-tile:nth-child(5) { transform: rotate(4deg); }
-.tech-tile:nth-child(6) { transform: rotate(-6deg); }
-.tech-tile:nth-child(7) { transform: rotate(2deg); }
-.tech-tile:nth-child(8) { transform: rotate(-4deg); }
+/* Móvil: los tickets se apilan como una baraja al hacer scroll (solo CSS) */
+@media (max-width: 767px) {
+  .project-card {
+    position: sticky;
+    top: calc(5.5rem + var(--i, 0) * 0.9rem);
+  }
+}
+
+/* ---------- Tecnologías: marquesina ---------- */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+}
+
+.marquee-pista {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 100%;
+  align-items: center;
+  animation: marquee 38s linear infinite;
+}
+
+.marquee-inversa .marquee-pista {
+  animation-direction: reverse;
+  animation-duration: 46s;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-100%); }
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(3.25rem, 9vw, 7.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: var(--cream);
+}
+
+.marquee-item::after {
+  content: "✦";
+  margin: 0 clamp(1.25rem, 3vw, 2.75rem);
+  font-size: 0.4em;
+  color: var(--wine);
+  -webkit-text-stroke: 0;
+}
+
+.marquee-item:nth-child(even) {
+  color: rgba(241, 232, 223, 0.22);
+}
+
+/* ---------- Preguntas ---------- */
+.faq-item {
+  border-top: 1px solid rgba(38, 38, 42, 0.3);
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid rgba(38, 38, 42, 0.3);
+}
+
+.faq-btn {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  text-align: left;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+}
+
+.faq-mas {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--wine);
+  transition: rotate 0.45s var(--ease-out);
+}
+
+.faq-mas::before,
+.faq-mas::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 2px;
+  background: currentColor;
+  translate: 0 -50%;
+}
+
+.faq-mas::after { rotate: 90deg; }
+
+.faq-resp {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s var(--ease-out);
+}
+
+.faq-resp > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0s 0.45s;
+}
+
+.faq-resp p {
+  max-width: 34rem;
+  padding-bottom: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+
+.faq-item.abierto .faq-resp { grid-template-rows: 1fr; }
+.faq-item.abierto .faq-resp > div { visibility: visible; transition-delay: 0s; }
+.faq-item.abierto .faq-mas { rotate: 135deg; }
+
+/* ---------- Táctil: respuesta inmediata al toque ---------- */
+@media (hover: none) {
+  main a[class*="rounded-full"]:active,
+  main button:active {
+    scale: 0.96;
+    transition: scale 0.12s ease;
+  }
+}
+
+/* ---------- Movimiento reducido: todo estático ---------- */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  #menu,
+  .ficha,
+  .servicio,
+  .servicio::before,
+  .project-card,
+  .faq-resp,
+  .faq-mas {
+    transition: none;
+  }
+  .sello-giro,
+  .marquee-pista {
+    animation: none;
+  }
+  .marquee {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .marquee-pista + .marquee-pista {
+    display: none;
+  }
+}
+
+/* Botones del ticket: el lleno invierte los colores del ticket, el otro es de contorno */
+.ticket-btn {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0.5rem 1.25rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ticket-btn-lleno {
+  background: var(--texto);
+  color: var(--tono);
+  border-color: var(--texto);
+}
+
+@media (hover: hover) {
+  .ticket-btn:hover { background: var(--texto); color: var(--tono); }
+  .ticket-btn-lleno:hover { background: transparent; color: var(--texto); }
+}
+
+/* Menú desplegable (móvil y tablet): panel bajo la píldora */
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  background: var(--ink);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.menu-panel[hidden] {
+  display: none;
+}
+
+.menu-panel a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.menu-panel a:hover,
+.menu-panel a:focus-visible {
+  background: rgba(241, 232, 223, 0.12);
+}
+
+/* Pantalla de carga sin parpadeo: la clase la pone un script del <head> y la quita main.js */
+html.cargando body {
+  opacity: 0;
+}
+
+body {
+  transition: background-color 0.6s ease, color 0.6s ease, opacity 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none; }
+}

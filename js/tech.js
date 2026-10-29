@@ -1,32 +1,33 @@
 function initTech() {
+  // La marquesina se mueve por CSS (y se detiene con movimiento reducido).
+  // Aquí solo se añade la inclinación según la velocidad del scroll, en escritorio con ratón.
   if (window.reduceMotion) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-  var tiles = gsap.utils.toArray('.tech-tile');
-  if (!tiles.length) return;
+  var mm = gsap.matchMedia();
+  mm.add('(min-width: 768px) and (hover: hover) and (pointer: fine)', function () {
+    var filas = gsap.utils.toArray('#tecnologias .marquee');
+    var inclinar = filas.map(function (f) {
+      return gsap.quickTo(f, 'skewX', { duration: 0.5, ease: 'power3.out' });
+    });
+    var reposo;
 
-  // Caída desde arriba con rebote; la rotación fija de cada polaroid viene del CSS
-  gsap.from(tiles, {
-    y: -500,
-    opacity: 0,
-    duration: 1.4,
-    ease: 'bounce.out',
-    stagger: 0.12,
-    scrollTrigger: { trigger: '#tecnologias-lista', start: 'top 80%', once: true },
-    onComplete: function () {
-      // Flotado leve en el contenedor interior para no tocar la rotación
-      tiles.forEach(function (tile, i) {
-        var inner = tile.querySelector('.tech-tile-inner');
-        if (!inner) return;
-        gsap.to(inner, {
-          y: -8,
-          duration: 1.8 + (i % 3) * 0.3,
-          ease: 'sine.inOut',
-          yoyo: true,
-          repeat: -1,
-          delay: i * 0.15
-        });
-      });
-    }
+    var st = ScrollTrigger.create({
+      trigger: '#tecnologias',
+      start: 'top bottom',
+      end: 'bottom top',
+      onUpdate: function (self) {
+        var v = gsap.utils.clamp(-9, 9, self.getVelocity() / -250);
+        inclinar.forEach(function (fn) { fn(v); });
+        clearTimeout(reposo);
+        reposo = setTimeout(function () { inclinar.forEach(function (fn) { fn(0); }); }, 120);
+      }
+    });
+
+    return function () {
+      clearTimeout(reposo);
+      st.kill();
+      gsap.set(filas, { clearProps: 'skewX' });
+    };
   });
 }

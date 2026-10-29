@@ -4,119 +4,282 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Saray.dev | Desarrolladora web</title>
+  <meta name="description" content="Saray, desarrolladora web full stack junior. Webs, landings, CRMs y paneles de inventario para negocios.">
+  <meta name="theme-color" content="#26262A">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Saray.dev | Desarrolladora web">
+  <meta property="og:description" content="Webs, landings, CRMs y paneles de inventario para negocios.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%239E1030'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='36' fill='%23F1E8DF'%3ES.%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: { ink: '#26262A', wine: '#9E1030', cream: '#F1E8DF' },
+          colors: { ink: '#26262A', wine: '#9E1030', cream: '#F1E8DF', kraft: '#E0D0BE' },
           fontFamily: {
-            display: ['Poppins', 'sans-serif'],
-            body: ['"DM Sans"', 'sans-serif']
+            display: ['"Bricolage Grotesque"', 'sans-serif'],
+            body: ['"Instrument Sans"', 'sans-serif']
           }
         }
       }
     };
   </script>
+  <!-- Oculta la página hasta que Tailwind (CDN) y las fuentes estén listos: evita el parpadeo sin estilos. -->
+  <script>document.documentElement.classList.add('cargando');</script>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-cream text-ink font-body antialiased">
 
-  <nav id="menu" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-6 rounded-full bg-ink text-cream px-5 py-2.5 shadow-lg" aria-label="Principal">
-    <a href="#inicio" class="font-display font-semibold text-lg">Saray<span class="text-wine">.</span>dev</a>
-    <ul class="hidden md:flex items-center gap-5 text-sm">
+  <nav id="menu" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-1rem)] whitespace-nowrap flex items-center gap-6 rounded-full bg-ink text-cream px-5 py-1 shadow-lg" aria-label="Principal">
+    <a href="#inicio" class="inline-flex min-h-[44px] items-center font-display font-semibold text-lg">Saray<span class="text-wine">.</span>dev</a>
+    <ul class="hidden lg:flex items-center gap-5 text-sm">
       <li><a href="#sobre-mi" class="underline-offset-4 hover:underline">Sobre mí</a></li>
       <li><a href="#servicios" class="underline-offset-4 hover:underline">Servicios</a></li>
+      <li><a href="#proceso" class="underline-offset-4 hover:underline">Proceso</a></li>
       <li><a href="#proyectos" class="underline-offset-4 hover:underline">Proyectos</a></li>
       <li><a href="#tecnologias" class="underline-offset-4 hover:underline">Tecnologías</a></li>
+      <li><a href="#preguntas" class="underline-offset-4 hover:underline">Preguntas</a></li>
       <li><a href="#contacto" class="underline-offset-4 hover:underline">Contacto</a></li>
     </ul>
-    <a href="#proyectos" class="md:hidden text-sm font-medium">Proyectos</a>
-    <a href="#contacto" class="md:hidden rounded-full bg-wine text-cream text-sm font-medium px-4 py-1.5">Contacto</a>
+    <button id="menu-boton" type="button" aria-expanded="false" aria-controls="menu-panel" class="lg:hidden inline-flex min-h-[44px] items-center text-sm font-medium">Menú</button>
+    <a href="#contacto" class="lg:hidden inline-flex min-h-[44px] items-center rounded-full bg-wine text-cream text-sm font-medium px-4">Contacto</a>
+
+    <div id="menu-panel" class="menu-panel lg:hidden" hidden>
+      <ul>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#proceso">Proceso</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#tecnologias">Tecnologías</a></li>
+        <li><a href="#preguntas">Preguntas</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
   </nav>
 
   <main>
+    <!-- Inicio -->
     <section id="inicio" data-bg="cream" class="relative min-h-screen overflow-hidden flex flex-col items-center justify-center px-4 text-ink">
       <h1 id="hero-nombre" class="hero-nombre font-display select-none">Saray</h1>
 
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none hero-foto-wrap">
-        <div id="hero-foto" class="hero-foto flex items-center justify-center rounded-3xl border-2 border-dashed border-ink/40 bg-cream/80 text-ink/70 text-center font-medium px-4">
+        <div id="hero-foto" class="hero-foto flex items-center justify-center rounded-t-[999px] rounded-b-3xl border-2 border-dashed border-ink/40 bg-cream/80 text-ink/70 text-center font-medium px-4">
           <span>Aquí va tu foto</span>
         </div>
       </div>
 
+      <div id="hero-sello" class="hero-sello" aria-hidden="true">
+        <svg class="sello-giro" viewBox="0 0 200 200">
+          <defs><path id="sello-circulo" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"/></defs>
+          <circle cx="100" cy="100" r="98" fill="#9E1030"/>
+          <circle cx="100" cy="100" r="92" fill="none" stroke="#F1E8DF" stroke-width="1" stroke-dasharray="3 4"/>
+          <text font-family="Bricolage Grotesque, sans-serif" font-weight="600" font-size="17" fill="#F1E8DF" letter-spacing="1">
+            <textPath href="#sello-circulo" textLength="470" lengthAdjust="spacing">webs a medida · crms · paneles de inventario ·</textPath>
+          </text>
+          <text x="100" y="116" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="52" fill="#F1E8DF">S.</text>
+        </svg>
+      </div>
+
       <div class="relative z-10 mt-auto pb-12 flex flex-col items-center gap-5 text-center">
-        <p class="font-display text-xl md:text-2xl font-medium">Desarrolladora web</p>
-        <a id="hero-boton" href="#contacto" class="rounded-full bg-wine text-cream font-medium px-8 py-3 hover:brightness-110">Contactar</a>
+        <p class="hero-lema font-display text-xl md:text-2xl font-medium max-w-xl">Desarrolladora web: webs, CRMs y paneles de inventario para negocios</p>
+        <a id="hero-boton" href="#contacto" class="inline-flex min-h-[44px] items-center rounded-full bg-wine text-cream font-medium px-8 py-3 hover:brightness-110">Contactar</a>
       </div>
     </section>
-    <section id="sobre-mi" data-bg="cream" class="min-h-screen flex flex-col items-center justify-center px-6 py-24 text-center text-ink">
-      <h2 class="font-display text-4xl md:text-5xl font-bold mb-8">Sobre mí</h2>
-      <p class="max-w-2xl text-lg md:text-2xl leading-relaxed">
-        Soy Saray, desarrolladora web full stack junior. Me gusta convertir las necesidades de un negocio en webs, landings, CRMs y paneles de inventario que sean claros, cuidados y fáciles de usar. Trabajo cerca de cada cliente para entender qué necesita de verdad y construirlo paso a paso.
-      </p>
-      <a id="sobre-mi-boton" href="#servicios" class="mt-10 rounded-full bg-ink text-cream font-medium px-8 py-3 hover:bg-wine">Qué puedo hacer</a>
-    </section>
-    <section id="servicios" data-bg="cream" class="min-h-screen flex flex-col items-center justify-center px-6 py-24 text-ink">
-      <h2 class="font-display text-4xl md:text-5xl font-bold text-center mb-14">¿En qué puedo ayudarte?</h2>
-      <div id="servicios-lista" class="servicios-lista grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
-          <svg class="h-10 w-10 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>
-          <h3 class="font-display text-xl font-semibold">Webs y landings</h3>
-          <p class="text-cream/80 leading-relaxed">Sitios claros y rápidos que presentan tu negocio y convierten visitas en clientes.</p>
-        </article>
-        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
-          <svg class="h-10 w-10 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M17 11a3 3 0 1 0 0-6M21.5 20c0-2.6-1.6-4.6-4-5.4"/></svg>
-          <h3 class="font-display text-xl font-semibold">Sistemas a medida (CRM)</h3>
-          <p class="text-cream/80 leading-relaxed">Herramientas para gestionar tus clientes y tu día a día sin hojas de cálculo interminables.</p>
-        </article>
-        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
-          <svg class="h-10 w-10 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg>
-          <h3 class="font-display text-xl font-semibold">Paneles de inventario</h3>
-          <p class="text-cream/80 leading-relaxed">Controla tu stock, entradas y salidas en un panel sencillo y siempre actualizado.</p>
-        </article>
-        <article class="service-card flex flex-col gap-4 rounded-3xl bg-ink text-cream p-7">
-          <svg class="h-10 w-10 text-cream" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="13" height="10" rx="1.5"/><path d="M6 19h6M9 15v4"/><rect x="17" y="9" width="4.5" height="10" rx="1.2"/></svg>
-          <h3 class="font-display text-xl font-semibold">Diseño responsive</h3>
-          <p class="text-cream/80 leading-relaxed">Una web que se ve y funciona bien en móvil, tablet y ordenador.</p>
-        </article>
+
+    <!-- Sobre mí -->
+    <section id="sobre-mi" data-bg="cream" class="min-h-screen px-6 py-24 md:px-12 flex items-center text-ink">
+      <div class="mx-auto grid w-full max-w-6xl gap-16 md:grid-cols-[1.7fr_1fr] md:items-center">
+        <div>
+          <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-10">Sobre mí</h2>
+          <p id="sobre-mi-texto" class="max-w-3xl text-2xl md:text-4xl leading-snug">
+            Soy Saray, desarrolladora web full stack junior. Me gusta convertir las necesidades de un negocio en webs, landings, CRMs y paneles de inventario que sean claros, cuidados y fáciles de usar. Trabajo cerca de cada cliente para entender qué necesita de verdad y construirlo paso a paso.
+          </p>
+          <a id="sobre-mi-boton" href="#servicios" class="mt-10 inline-flex min-h-[44px] items-center rounded-full bg-ink text-cream font-medium px-8 py-3 hover:bg-wine">Qué puedo hacer</a>
+        </div>
+
+        <aside class="ficha" aria-label="Ficha rápida">
+          <dl class="grid gap-5">
+            <div>
+              <dt class="font-display text-sm font-semibold text-wine">Perfil</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">Desarrolladora full stack junior</dd>
+            </div>
+            <div>
+              <dt class="font-display text-sm font-semibold text-wine">Trabajo con</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">HTML, CSS, JavaScript y PHP</dd>
+            </div>
+            <div>
+              <dt class="font-display text-sm font-semibold text-wine">Para quién</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">Negocios que necesitan web, CRM o inventario</dd>
+            </div>
+          </dl>
+        </aside>
       </div>
     </section>
-    <section id="proyectos" data-bg="cream" class="relative min-h-screen overflow-hidden px-6 py-24 text-ink">
+
+    <!-- Servicios -->
+    <section id="servicios" data-bg="cream" class="px-6 py-24 md:px-12 text-ink">
+      <div class="mx-auto w-full max-w-6xl">
+        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-14">¿En qué puedo ayudarte?</h2>
+        <ul id="servicios-lista" class="servicios-lista">
+          <li class="servicio">
+            <span class="servicio-linea" aria-hidden="true"></span>
+            <h3 class="servicio-titulo font-display font-extrabold tracking-tight">Webs y landings</h3>
+            <p class="servicio-texto">Sitios claros y rápidos que presentan tu negocio y convierten visitas en clientes.</p>
+            <svg class="servicio-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>
+          </li>
+          <li class="servicio">
+            <span class="servicio-linea" aria-hidden="true"></span>
+            <h3 class="servicio-titulo font-display font-extrabold tracking-tight">Sistemas a medida (CRM)</h3>
+            <p class="servicio-texto">Herramientas para gestionar tus clientes y tu día a día sin hojas de cálculo interminables.</p>
+            <svg class="servicio-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6M17 11a3 3 0 1 0 0-6M21.5 20c0-2.6-1.6-4.6-4-5.4"/></svg>
+          </li>
+          <li class="servicio">
+            <span class="servicio-linea" aria-hidden="true"></span>
+            <h3 class="servicio-titulo font-display font-extrabold tracking-tight">Paneles de inventario</h3>
+            <p class="servicio-texto">Controla tu stock, entradas y salidas en un panel sencillo y siempre actualizado.</p>
+            <svg class="servicio-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8M12 13v8"/></svg>
+          </li>
+          <li class="servicio">
+            <span class="servicio-linea" aria-hidden="true"></span>
+            <h3 class="servicio-titulo font-display font-extrabold tracking-tight">Diseño responsive</h3>
+            <p class="servicio-texto">Una web que se ve y funciona bien en móvil, tablet y ordenador.</p>
+            <svg class="servicio-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="13" height="10" rx="1.5"/><path d="M6 19h6M9 15v4"/><rect x="17" y="9" width="4.5" height="10" rx="1.2"/></svg>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Proceso -->
+    <section id="proceso" data-bg="ink" class="overflow-x-clip bg-ink text-cream px-6 py-28 md:px-12">
+      <div class="mx-auto w-full max-w-5xl">
+        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-20 md:text-center">Así trabajamos juntos</h2>
+
+        <div class="proceso-lista relative">
+          <div class="proceso-linea-fondo" aria-hidden="true"><div class="proceso-linea"></div></div>
+          <ol class="grid gap-16 md:gap-24">
+            <li class="paso">
+              <span class="paso-punto" aria-hidden="true"></span>
+              <div class="paso-cuerpo">
+                <span class="paso-num font-display" aria-hidden="true">1</span>
+                <h3 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">Conversamos</h3>
+                <p class="paso-texto">Me cuentas qué necesita tu negocio y a quién quieres llegar. Sin tecnicismos.</p>
+              </div>
+            </li>
+            <li class="paso">
+              <span class="paso-punto" aria-hidden="true"></span>
+              <div class="paso-cuerpo">
+                <span class="paso-num font-display" aria-hidden="true">2</span>
+                <h3 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">Diseñamos</h3>
+                <p class="paso-texto">Te enseño cómo se verá la web o el panel antes de programar nada.</p>
+              </div>
+            </li>
+            <li class="paso">
+              <span class="paso-punto" aria-hidden="true"></span>
+              <div class="paso-cuerpo">
+                <span class="paso-num font-display" aria-hidden="true">3</span>
+                <h3 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">Construyo</h3>
+                <p class="paso-texto">Programo por partes y te voy enseñando avances para que puedas opinar a tiempo.</p>
+              </div>
+            </li>
+            <li class="paso">
+              <span class="paso-punto" aria-hidden="true"></span>
+              <div class="paso-cuerpo">
+                <span class="paso-num font-display" aria-hidden="true">4</span>
+                <h3 class="font-display text-3xl md:text-4xl font-extrabold tracking-tight">Entrego y acompaño</h3>
+                <p class="paso-texto">Publico la web, te explico cómo usarla y sigo cerca por si surge algo.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proyectos -->
+    <section id="proyectos" data-bg="cream" class="relative min-h-screen overflow-x-clip px-6 py-24 md:px-12 text-ink">
       <span class="proyectos-fondo font-display select-none" aria-hidden="true">Proyectos</span>
-      <h2 class="relative z-10 font-display text-4xl md:text-5xl font-bold text-center mb-16">Proyectos</h2>
-      <div class="cards relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+      <div class="relative z-10 mx-auto w-full max-w-6xl">
+        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-16">Proyectos</h2>
+        <div class="cards grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+        <div class="mt-12 flex justify-center">
+          <button id="proyectos-mas" type="button" aria-expanded="false" class="hidden min-h-[44px] rounded-full bg-ink text-cream font-medium px-8 py-3 hover:bg-wine">Ver más proyectos</button>
+        </div>
+      </div>
     </section>
-    <section id="tecnologias" data-bg="ink" class="relative min-h-screen overflow-hidden bg-ink text-cream px-6 py-24 flex flex-col items-center justify-center">
-      <h2 class="font-display text-4xl md:text-5xl font-bold text-center mb-16">Mi caja de herramientas</h2>
-      <ul id="tecnologias-lista" role="list" class="mx-auto grid w-full max-w-4xl grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">HTML</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">CSS</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">JavaScript</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">PHP</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">Git / GitHub</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">Vercel</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">Tailwind</p></div></li>
-        <li class="tech-tile"><div class="tech-tile-inner rounded-sm bg-cream text-ink shadow-xl p-3 pb-4"><div class="aspect-[4/3] rounded-sm bg-ink/10" aria-hidden="true"></div><p class="font-display font-semibold text-lg md:text-xl text-center mt-3">GSAP</p></div></li>
+
+    <!-- Tecnologías -->
+    <section id="tecnologias" data-bg="ink" class="relative overflow-hidden bg-ink text-cream py-24">
+      <h2 class="px-6 md:px-12 mx-auto w-full max-w-6xl text-center font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-14">Mi caja de herramientas</h2>
+
+      <ul class="sr-only">
+        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>Git / GitHub</li><li>Vercel</li><li>Tailwind</li><li>GSAP</li>
       </ul>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-pista"><span class="marquee-item">HTML</span><span class="marquee-item">CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">PHP</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Vercel</span><span class="marquee-item">Tailwind</span><span class="marquee-item">GSAP</span></div>
+        <div class="marquee-pista"><span class="marquee-item">HTML</span><span class="marquee-item">CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">PHP</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Vercel</span><span class="marquee-item">Tailwind</span><span class="marquee-item">GSAP</span></div>
+      </div>
+      <div class="marquee marquee-inversa mt-4" aria-hidden="true">
+        <div class="marquee-pista"><span class="marquee-item">GSAP</span><span class="marquee-item">Tailwind</span><span class="marquee-item">Vercel</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">PHP</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS</span><span class="marquee-item">HTML</span></div>
+        <div class="marquee-pista"><span class="marquee-item">GSAP</span><span class="marquee-item">Tailwind</span><span class="marquee-item">Vercel</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">PHP</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS</span><span class="marquee-item">HTML</span></div>
+      </div>
     </section>
+
+    <!-- Preguntas -->
+    <section id="preguntas" data-bg="cream" class="px-6 py-28 md:px-12 text-ink">
+      <div class="mx-auto grid w-full max-w-6xl gap-12 md:grid-cols-[1fr_1.5fr]">
+        <div class="md:sticky md:top-28 md:self-start">
+          <h2 class="font-display text-5xl md:text-6xl font-extrabold tracking-tight">Preguntas frecuentes</h2>
+          <p class="mt-6 max-w-xs text-lg">Lo que suelen preguntarme antes de empezar.</p>
+        </div>
+
+        <div class="faq-lista">
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-1" id="faq-b1"><span>¿Qué necesito para empezar?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-1" role="region" aria-labelledby="faq-b1"><div><p>Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-2" id="faq-b2"><span>¿Cuánto cuesta?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-2" role="region" aria-labelledby="faq-b2"><div><p>Depende de lo que necesites: una landing no cuesta lo mismo que un CRM. Cuéntame tu caso y te preparo un presupuesto.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-3" id="faq-b3"><span>¿Cuánto tarda?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-3" role="region" aria-labelledby="faq-b3"><div><p>Depende del tamaño del proyecto. Después de la primera conversación te doy un plazo concreto.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-4" id="faq-b4"><span>¿Tendré que saber programar para usarla?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-4" role="region" aria-labelledby="faq-b4"><div><p>No. Te explico cómo usar y actualizar lo importante, paso a paso.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-5" id="faq-b5"><span>¿Se verá bien en el móvil?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-5" role="region" aria-labelledby="faq-b5"><div><p>Sí. Cada web se diseña pensando en móvil, tablet y ordenador.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
     <section id="contacto" data-bg="wine" class="min-h-screen bg-wine text-cream flex flex-col px-6 pt-24">
       <div class="flex flex-1 flex-col items-center justify-center text-center">
-        <h2 id="contacto-frase" class="font-display text-4xl md:text-6xl font-bold max-w-3xl leading-tight mb-12">Las grandes ideas empiezan en conversación</h2>
+        <h2 id="contacto-frase" class="font-display text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.02] mb-12">Las grandes ideas empiezan en conversación</h2>
         <div id="contacto-botones" class="flex w-full max-w-md flex-col items-stretch gap-4 md:max-w-none md:w-auto md:flex-row md:items-center">
-          <a id="contacto-correo" href="mailto:CORREO_PENDIENTE" class="contacto-boton rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">Correo</a>
-          <a id="contacto-whatsapp" href="https://wa.me/WHATSAPP_PENDIENTE" target="_blank" rel="noopener noreferrer" class="contacto-boton rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">WhatsApp</a>
-          <a id="contacto-cv" role="link" aria-disabled="true" tabindex="-1" class="contacto-boton contacto-cv rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center opacity-50 pointer-events-none">Descargar CV</a>
+          <a id="contacto-correo" href="mailto:sarayortizcordero4@gmail.com" class="contacto-boton hidden min-h-[44px] rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">Correo</a>
+          <a id="contacto-whatsapp" href="https://wa.me/34675843655" target="_blank" rel="noopener noreferrer" class="contacto-boton hidden min-h-[44px] rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">WhatsApp</a>
+          <a id="contacto-instagram" href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer" class="contacto-boton min-h-[44px] rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">Instagram</a>
+          <a id="contacto-cv" class="contacto-boton contacto-cv hidden min-h-[44px] rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center">Descargar CV</a>
         </div>
       </div>
       <footer class="mt-16 flex flex-col items-center justify-between gap-2 border-t border-cream/30 py-6 text-sm sm:flex-row">
         <p>&copy; <span id="contacto-anio">2026</span> Saray.dev</p>
-        <a href="https://github.com/SarayOrtizCordero" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 hover:decoration-2">GitHub</a>
+        <nav class="flex items-center gap-6" aria-label="Redes">
+          <a href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:decoration-2">Instagram</a>
+          <a href="https://github.com/SarayOrtizCordero" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:decoration-2">GitHub</a>
+        </nav>
       </footer>
     </section>
   </main>
@@ -125,11 +288,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="js/data.js"></script>
+  <script src="js/motion.js"></script>
   <script src="js/main.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/services.js"></script>
+  <script src="js/process.js"></script>
   <script src="js/projects.js"></script>
   <script src="js/tech.js"></script>
+  <script src="js/faq.js"></script>
   <script src="js/contact.js"></script>
 </body>
 </html>
