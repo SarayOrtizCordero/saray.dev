@@ -63,8 +63,10 @@ function initProjects() {
 
   var mm = gsap.matchMedia();
 
-  // Escritorio y tablet: flotado suave, profundidad con el scroll y desenfoque breve
-  mm.add('(min-width: 768px)', function () {
+  // Escritorio y tablet: flotado suave y profundidad con el scroll; desenfoque breve solo en escritorio con ratón.
+  // matchMedia vuelve a ejecutar la función cuando cambia cualquier condición (p. ej. al cruzar 1024 px):
+  // las columnas se recalculan y los tweens/ScrollTriggers anteriores se revierten.
+  mm.add({ tablet: '(min-width: 768px)', blur: '(min-width: 1024px) and (hover: hover)' }, function (context) {
     // Misma amplitud para todas las tarjetas de una columna: así nunca se solapan entre sí
     var cols = getComputedStyle(cards[0].parentNode).gridTemplateColumns.split(' ').length || 1;
     var depths = [8, -6, 4];
@@ -90,27 +92,30 @@ function initProjects() {
         });
     });
 
-    // desenfoque breve mientras hay movimiento
+    // desenfoque breve mientras hay movimiento (solo escritorio con ratón)
     var blurTimer;
-    var st = ScrollTrigger.create({
-      trigger: '#proyectos',
-      start: 'top bottom',
-      end: 'bottom top',
-      onUpdate: function (self) {
-        var b = Math.min(Math.abs(self.getVelocity()) / 1500, 2.5);
-        gsap.set(cards, { filter: 'blur(' + b.toFixed(2) + 'px)' });
-        clearTimeout(blurTimer);
-        blurTimer = setTimeout(function () {
-          gsap.to(cards, { filter: 'blur(0px)', duration: 0.4, overwrite: 'auto' });
-        }, 120);
-      },
-      onLeave: function () { gsap.set(cards, { filter: 'none' }); },
-      onLeaveBack: function () { gsap.set(cards, { filter: 'none' }); }
-    });
+    var st = null;
+    if (context.conditions.blur) {
+      st = ScrollTrigger.create({
+        trigger: '#proyectos',
+        start: 'top bottom',
+        end: 'bottom top',
+        onUpdate: function (self) {
+          var b = Math.min(Math.abs(self.getVelocity()) / 1500, 2.5);
+          gsap.set(cards, { filter: 'blur(' + b.toFixed(2) + 'px)' });
+          clearTimeout(blurTimer);
+          blurTimer = setTimeout(function () {
+            gsap.to(cards, { filter: 'blur(0px)', duration: 0.4, overwrite: 'auto' });
+          }, 120);
+        },
+        onLeave: function () { gsap.set(cards, { filter: 'none' }); },
+        onLeaveBack: function () { gsap.set(cards, { filter: 'none' }); }
+      });
+    }
 
     return function () {
       clearTimeout(blurTimer);
-      st.kill();
+      if (st) st.kill();
       gsap.set(cards, { clearProps: 'filter,yPercent,y' });
     };
   });

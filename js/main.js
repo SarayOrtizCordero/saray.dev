@@ -16,13 +16,16 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  // Anclas del menú
-  document.querySelectorAll('#menu a[href^="#"]').forEach(function (link) {
+  // Todas las anclas internas (menú, botones del hero y de "Sobre mí") pasan por Lenis
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href || href === '#') return;
     link.addEventListener('click', function (e) {
-      var target = document.querySelector(link.getAttribute('href'));
+      var target;
+      try { target = document.querySelector(href); } catch (err) { target = null; }
       if (!target) return;
       e.preventDefault();
-      if (lenis) {
+      if (lenis && !window.reduceMotion) {
         lenis.scrollTo(target);
       } else {
         target.scrollIntoView({ behavior: window.reduceMotion ? 'auto' : 'smooth' });
@@ -56,5 +59,13 @@
     ['initHero', 'initServices', 'initProjects', 'initTech', 'initContact'].forEach(function (fn) {
       if (typeof window[fn] === 'function') window[fn]();
     });
+
+    // Recalcula posiciones una vez creadas todas las animaciones y otra al cargar las fuentes
+    if (hasGsap) {
+      ScrollTrigger.refresh();
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+      }
+    }
   });
 })();

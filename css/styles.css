@@ -34,10 +34,22 @@ button:focus-visible {
   margin-top: auto;
 }
 
+/* La foto vive en una banda que deja libres el menú (arriba) y el subtítulo + botón (abajo) */
+.hero-foto-wrap {
+  padding: 5rem 1rem 11rem;
+}
+
 .hero-foto {
-  width: clamp(12rem, 24vw, 22rem);
+  /* alto: el menor entre el tamaño deseado (3:4 de hasta 22rem de ancho) y la banda disponible */
+  height: min(100%, calc(clamp(12rem, 24vw, 22rem) * 4 / 3));
   aspect-ratio: 3 / 4;
   z-index: 5;
+}
+
+@media (max-height: 500px) {
+  .hero-foto-wrap {
+    padding: 5.5rem 1rem 9.5rem;
+  }
 }
 
 /* Servicios: perspectiva para la rotación 3D y inclinación base (solo escritorio) */
