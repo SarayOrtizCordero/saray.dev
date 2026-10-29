@@ -86,7 +86,11 @@
         </article>
       </div>
     </section>
-    <section id="proyectos" data-bg="cream" class="min-h-screen"></section>
+    <section id="proyectos" data-bg="cream" class="relative min-h-screen overflow-hidden px-6 py-24 text-ink">
+      <span class="proyectos-fondo font-display select-none" aria-hidden="true">Proyectos</span>
+      <h2 class="relative z-10 font-display text-4xl md:text-5xl font-bold text-center mb-16">Proyectos</h2>
+      <div class="cards relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
     <section id="tecnologias" data-bg="ink" class="min-h-screen"></section>
     <section id="contacto" data-bg="wine" class="min-h-screen"></section>
   </main>
@@ -98,5 +102,6 @@
   <script src="js/main.js"></script>
   <script src="js/hero.js"></script>
   <script src="js/services.js"></script>
+  <script src="js/projects.js"></script>
 </body>
 </html>

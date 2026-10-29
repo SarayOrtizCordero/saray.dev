@@ -45,3 +45,32 @@ body {
   .service-card:nth-child(3) { transform: rotate(2deg); }
   .service-card:nth-child(4) { transform: rotate(6deg); }
 }
+
+/* Proyectos */
+.proyectos-fondo {
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(5rem, 22vw, 20rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: rgba(38, 38, 42, 0.07);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.project-card {
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .project-card:nth-child(6n+1) { transform: rotate(-3deg); }
+  .project-card:nth-child(6n+2) { transform: rotate(2deg); margin-top: 2.5rem; }
+  .project-card:nth-child(6n+3) { transform: rotate(-1.5deg); }
+  .project-card:nth-child(6n+4) { transform: rotate(3deg); }
+  .project-card:nth-child(6n+5) { transform: rotate(-2deg); margin-top: 2.5rem; }
+  .project-card:nth-child(6n+6) { transform: rotate(1.5deg); }
+}
