@@ -30,7 +30,7 @@
 
   // ------------------------------------------------- Sección activa en el menú
   function marcarActiva(id, activa) {
-    document.querySelectorAll('#menu a[href="#' + id + '"]').forEach(function (a) {
+    document.querySelectorAll('#menu a[href="#' + id + '"], #menu-panel a[href="#' + id + '"]').forEach(function (a) {
       if (activa) a.setAttribute('aria-current', 'true');
       else a.removeAttribute('aria-current');
     });

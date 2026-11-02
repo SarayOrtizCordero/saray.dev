@@ -48,7 +48,7 @@
     });
   });
 
-  // Menú desplegable (móvil y tablet): se cierra con Escape, al tocar fuera o al elegir una sección
+  // Menú móvil (pantalla completa): se cierra con Escape, al elegir una sección o al pasar a tablet/escritorio
   var menuNav = document.getElementById('menu');
   var menuBoton = document.getElementById('menu-boton');
   var menuPanel = document.getElementById('menu-panel');
@@ -56,8 +56,9 @@
     if (!menuBoton || !menuPanel) return;
     menuPanel.hidden = !abierto;
     menuBoton.setAttribute('aria-expanded', String(abierto));
-    menuBoton.textContent = abierto ? 'Cerrar' : 'Menú';
+    menuBoton.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
     menuNav.classList.toggle('abierto', abierto);
+    document.documentElement.classList.toggle('menu-abierto', abierto);
   }
   if (menuBoton && menuPanel) {
     menuBoton.addEventListener('click', function () { setMenu(menuPanel.hidden); });
@@ -65,9 +66,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !menuPanel.hidden) { setMenu(false); menuBoton.focus(); }
     });
-    document.addEventListener('click', function (e) {
-      if (!menuPanel.hidden && !menuNav.contains(e.target)) setMenu(false);
-    });
+    window.matchMedia('(min-width: 768px)').addEventListener('change', function (e) { if (e.matches) setMenu(false); });
   }
 
   // Fondo del body según la sección visible (clases bg-* de Tailwind, transición en CSS)
