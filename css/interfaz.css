@@ -1,0 +1,614 @@
+/* Interfaz: tema oscuro, menú, filtros, ventana de caso, pie y cortina.
+   Va después de styles.css y usa sus variables (--c-ink, --c-cream, --wine, --papel, --noche…). */
+
+/* =====================================================================
+   TEMA OSCURO
+   El tema se guarda en <html data-tema="claro|oscuro"> (script del <head> + js/interfaz.js).
+   Las clases de Tailwind (bg-ink, text-cream…) y el CSS propio leen estas variables.
+   ===================================================================== */
+html[data-tema="oscuro"] {
+  color-scheme: dark;
+  --c-ink: 241 232 223;
+  --c-cream: 30 30 34;
+  --c-kraft: 58 58 66;
+  --ink: rgb(var(--c-ink));
+  --cream: rgb(var(--c-cream));
+  --kraft: rgb(var(--c-kraft));
+  --vino-texto: #F0708A;
+}
+
+:root { --vino-texto: #9E1030; }
+
+/* Piezas con fondo propio (secciones oscuras, vino y el menú): conservan sus colores en los dos temas */
+#proceso,
+#tecnologias,
+#contacto,
+.menu-nav {
+  --c-ink: 38 38 42;
+  --c-cream: 241 232 223;
+  --ink: rgb(var(--c-ink));
+  --cream: rgb(var(--c-cream));
+}
+
+html[data-tema="oscuro"] #proceso,
+html[data-tema="oscuro"] #tecnologias {
+  --c-ink: 20 20 23;
+  --ink: rgb(var(--c-ink));
+}
+
+html[data-tema="oscuro"] .menu-nav {
+  --c-ink: 48 48 54;
+  --ink: rgb(var(--c-ink));
+}
+
+/* Fondo del body según la sección visible (lo cambia js/main.js) */
+.fondo-cream { background-color: var(--cream); }
+.fondo-ink { background-color: #26262A; }
+.fondo-wine { background-color: var(--wine); }
+html[data-tema="oscuro"] .fondo-ink { background-color: #141417; }
+
+/* ---------- Enlace para saltar al contenido ---------- */
+.salto {
+  position: fixed;
+  left: 0.75rem;
+  top: -5rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: var(--wine);
+  color: var(--papel);
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.salto:focus { top: 0.75rem; }
+
+/* =====================================================================
+   MENÚ
+   ===================================================================== */
+.menu-nav {
+  position: fixed;
+  z-index: 50;
+  top: 0.5rem;
+  inset-inline: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  border-radius: 999px;
+  background: rgb(var(--c-ink) / 0.94);
+  color: var(--papel);
+  border: 1px solid rgb(var(--c-cream) / 0.12);
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.22);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .menu-nav {
+    top: 1rem;
+    margin-inline: auto;
+    width: min(46rem, calc(100% - 2rem));
+    padding: 0.25rem 0.5rem 0.25rem 1.25rem;
+  }
+}
+
+.menu-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.menu-logo svg {
+  color: var(--papel);
+  transition: rotate 0.6s var(--ease-out);
+}
+
+.menu-logo:hover svg { rotate: 90deg; }
+.menu-punto { color: #E0476A; }
+
+.menu-links {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .menu-links { display: flex; }
+}
+
+.menu-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+}
+
+.menu-links a:hover { background: rgb(var(--c-cream) / 0.1); }
+.menu-links a[aria-current="true"] { background: rgb(var(--c-cream) / 0.18); }
+
+.menu-acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tema-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  color: var(--papel);
+  transition: background-color 0.25s ease;
+}
+
+.tema-boton:hover { background: rgb(var(--c-cream) / 0.12); }
+.tema-boton .icono-sol { display: none; }
+html[data-tema="oscuro"] .tema-boton .icono-luna { display: none; }
+html[data-tema="oscuro"] .tema-boton .icono-sol { display: block; }
+.menu-acciones .tema-boton { display: none; }
+
+@media (min-width: 768px) {
+  .menu-acciones .tema-boton { display: inline-flex; }
+}
+
+.menu-boton {
+  min-height: 44px;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .menu-boton { display: none; }
+}
+
+/* Botón Contacto: se ve pequeño (32 px) pero el área táctil llega a 44 px */
+.menu-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 1rem;
+  margin-left: 0.25rem;
+  border-radius: 999px;
+  background: var(--wine);
+  color: var(--papel);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: filter 0.2s ease;
+}
+
+.menu-cta::after {
+  content: "";
+  position: absolute;
+  inset: -6px -4px;
+}
+
+.menu-cta:hover { filter: brightness(1.15); }
+
+/* Panel desplegable (solo por debajo de 768 px) */
+.menu-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  inset-inline: 0;
+  padding: 0.75rem;
+  background: rgb(var(--c-ink) / 0.97);
+  color: var(--papel);
+  border: 1px solid rgb(var(--c-cream) / 0.12);
+  border-radius: 1.75rem;
+  box-shadow: 0 18px 40px rgb(0 0 0 / 0.3);
+}
+
+.menu-panel[hidden] { display: none; }
+
+@media (min-width: 768px) {
+  .menu-panel { display: none !important; }
+}
+
+.menu-panel ul {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-panel li a {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.menu-panel li a:hover,
+.menu-panel li a:focus-visible { background: rgb(var(--c-cream) / 0.1); }
+.menu-panel li a[aria-current="true"] { background: rgb(var(--c-cream) / 0.16); }
+
+.menu-panel-pie {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.5rem 0 0.5rem;
+  border-top: 1px solid rgb(var(--c-cream) / 0.14);
+  font-size: 0.9rem;
+}
+
+.menu-panel-pie a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tema-boton-texto {
+  width: auto;
+  padding: 0 0.9rem 0 0.7rem;
+  margin-right: auto;
+  font-weight: 500;
+}
+
+/* =====================================================================
+   PROYECTOS: pestañas de filtro (carpeta) y ticket con más vida
+   ===================================================================== */
+.proy-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 2.5rem;
+  padding-inline: 0.25rem;
+  border-bottom: 2px solid rgb(var(--c-ink));
+}
+
+.proy-tab {
+  position: relative;
+  bottom: -2px;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 2px solid rgb(var(--c-ink));
+  border-bottom: 0;
+  border-radius: 0.9rem 0.9rem 0 0;
+  background: rgb(var(--c-kraft));
+  color: rgb(var(--c-ink));
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, translate 0.25s var(--ease-out);
+}
+
+.proy-tab:hover { translate: 0 -3px; }
+
+.proy-tab[aria-selected="true"] {
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-cream));
+  translate: 0 0;
+}
+
+.proy-tab-n {
+  margin-left: 0.4rem;
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
+
+.project-card.filtrado { display: none; }
+
+/* Imagen del ticket dentro de un marco: permite zoom y destello al pasar */
+.ticket-marco {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background: rgb(128 128 128 / 0.15);
+}
+
+.ticket-marco .ticket-img,
+.ticket-marco img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: 50% 0;
+  border-radius: 0;
+  transition: scale 0.8s var(--ease-out);
+}
+
+.ticket-marco::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.32) 50%, transparent 62%);
+  translate: -120% 0;
+  pointer-events: none;
+}
+
+.ticket-ver {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  background: var(--papel);
+  color: var(--noche);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0;
+  translate: 0 0.6rem;
+  transition: opacity 0.3s ease, translate 0.4s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .ticket:hover .ticket-marco img,
+  .ticket:hover .ticket-marco .ticket-img { scale: 1.08; }
+  .ticket:hover .ticket-marco::after { translate: 120% 0; transition: translate 0.9s var(--ease-out); }
+  .ticket:hover .ticket-ver { opacity: 1; translate: 0 0; }
+  .project-card:hover .ticket-sello { rotate: -24deg; scale: 1.12; }
+}
+
+.ticket-sello { transition: rotate 0.6s var(--ease-out), scale 0.4s var(--ease-out); }
+
+/* =====================================================================
+   VENTANA DE CASO
+   ===================================================================== */
+.caso {
+  --tono: rgb(var(--c-cream));
+  --texto: rgb(var(--c-ink));
+  width: min(46rem, calc(100% - 1.5rem));
+  max-height: calc(100dvh - 1.5rem);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 1.5rem;
+  background: rgb(var(--c-cream));
+  color: rgb(var(--c-ink));
+  overflow: hidden;
+}
+
+.caso::backdrop {
+  background: rgb(20 20 23 / 0.72);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.caso-cuerpo {
+  position: relative;
+  display: grid;
+  max-height: calc(100dvh - 1.5rem);
+  overflow: auto;
+}
+
+.caso-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1; /* mismo formato que las capturas: se ven enteras, sin recortar */
+  object-fit: contain;
+  background: rgb(var(--c-kraft));
+}
+
+.caso-texto { padding: 1.5rem 1.5rem 2rem; }
+
+.caso-nota {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  background: rgb(var(--c-kraft));
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.caso-titulo {
+  margin: 0.75rem 0 1rem;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.caso-texto h4 {
+  margin-top: 1.1rem;
+  color: var(--vino-texto);
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.caso-texto p { max-width: 34rem; line-height: 1.55; }
+
+.caso-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.caso-stack li {
+  padding: 0.25rem 0.75rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.caso-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.caso-cerrar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgb(var(--c-cream) / 0.92);
+  color: rgb(var(--c-ink));
+  transition: rotate 0.4s var(--ease-out);
+}
+
+.caso-cerrar:hover { rotate: 90deg; }
+html.caso-abierto { overflow: hidden; }
+
+/* =====================================================================
+   PIE DE PÁGINA
+   ===================================================================== */
+.pie {
+  margin-top: 4rem;
+  padding: 2.5rem 0 1.5rem;
+  border-top: 1px solid rgb(var(--c-cream) / 0.3);
+}
+
+.pie-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .pie-grid { grid-template-columns: 1.6fr 1fr 1fr; gap: 3rem; align-items: start; }
+}
+
+.pie-logo {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.pie-logo span { opacity: 0.7; }
+.pie-marca p + p { max-width: 22rem; margin-top: 0.5rem; opacity: 0.85; }
+
+.pie-titulo {
+  margin-bottom: 0.5rem;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 600;
+}
+
+.pie ul { padding: 0; list-style: none; }
+
+.pie li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  text-underline-offset: 4px;
+}
+
+.pie li a:hover { text-decoration: underline; }
+
+.pie-subir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.pie-subir:hover { background: var(--papel); color: var(--wine); }
+.pie-subir svg { transition: translate 0.25s var(--ease-out); }
+.pie-subir:hover svg { translate: 0 -3px; }
+.pie-base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgb(var(--c-cream) / 0.2);
+  font-size: 0.875rem;
+}
+
+.pie-base p { opacity: 0.85; }
+
+/* =====================================================================
+   CORTINA DE TRANSICIÓN
+   ===================================================================== */
+.cortina {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  background: var(--wine);
+  color: var(--papel);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cortina-texto {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: clamp(2.5rem, 9vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tema-boton,
+  .menu-links a,
+  .menu-logo svg,
+  .proy-tab,
+  .ticket-marco img,
+  .ticket-ver,
+  .ticket-sello,
+  .caso-cerrar,
+  .salto,
+  .pie-subir,
+  .pie-subir svg { transition: none; }
+  .ticket-marco::after { display: none; }
+}
+
+/* =====================================================================
+   Ajustes del tema oscuro en piezas con clases de Tailwind
+   ===================================================================== */
+/* Botones con fondo vino: el texto siempre claro, también en modo oscuro */
+html .bg-wine.text-cream { color: var(--papel); }
+html .hover\:bg-wine:hover { color: var(--papel); }
+
+/* Textos en vino sobre fondos que se oscurecen: versión más clara en modo oscuro */
+.ficha dt { color: var(--vino-texto); }
+
+
+.proy-tabs[hidden] { display: none; }
+
+html[data-tema="oscuro"] .hero-nombre { color: rgb(var(--c-ink) / 0.4); }

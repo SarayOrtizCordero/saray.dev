@@ -14,11 +14,7 @@ function initHero() {
     tl.from(letras, { yPercent: 110, rotate: 8, duration: 1.2, stagger: 0.07 })
       .from('#hero-foto', { scale: 0.85, opacity: 0, duration: 1.1, ease: 'power3.out' }, 0.35)
       .from(lema, { yPercent: 110, duration: 0.8, stagger: 0.04 }, 0.8)
-      .from('#hero-boton', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, 1)
-      .from('#hero-sello', { scale: 0, rotate: -140, duration: 1.1, ease: 'back.out(1.6)' }, 1.1);
-
-    // El sello sube más rápido que el resto al bajar (parallax; la rotación de entrada no se toca)
-    gsap.to('#hero-sello', { yPercent: -120, ease: 'none', scrollTrigger: { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: true } });
+      .from('#hero-boton', { y: 30, opacity: 0, duration: 0.8, ease: 'power3.out' }, 1);
 
     var trigger = { trigger: '#inicio', start: 'top top', end: 'bottom top', scrub: true };
     gsap.to('#hero-nombre', { yPercent: 25, ease: 'none', scrollTrigger: trigger });
@@ -49,7 +45,6 @@ function initHero() {
     tl.from(letras, { yPercent: 110, duration: 0.8, stagger: 0.05 })
       .from('#hero-foto', { scale: 0.94, opacity: 0, duration: 0.7 }, 0.2)
       .from(lema, { yPercent: 110, duration: 0.6, stagger: 0.03 }, 0.5)
-      .from('#hero-boton', { y: 20, opacity: 0, duration: 0.6 }, 0.7)
-      .from('#hero-sello', { scale: 0, rotate: -90, duration: 0.7, ease: 'back.out(1.6)' }, 0.8);
+      .from('#hero-boton', { y: 20, opacity: 0, duration: 0.6 }, 0.7);
   });
 }

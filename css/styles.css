@@ -1,10 +1,16 @@
 /* Paleta: ink #26262A · wine #9E1030 · cream #F1E8DF · kraft #E0D0BE.
    El color de fondo del body lo cambia main.js intercambiando clases bg-* (tokens de Tailwind). */
 :root {
-  --ink: #26262A;
+  /* Canales RGB: permiten opacidades (rgb(var(--c-ink) / .5)) y cambiar de tema solo con variables */
+  --c-ink: 38 38 42;
+  --c-cream: 241 232 223;
+  --c-kraft: 224 208 190;
+  --ink: rgb(var(--c-ink));
+  --cream: rgb(var(--c-cream));
+  --kraft: rgb(var(--c-kraft));
   --wine: #9E1030;
-  --cream: #F1E8DF;
-  --kraft: #E0D0BE;
+  --papel: #F1E8DF; /* crema fija, no cambia con el tema */
+  --noche: #26262A; /* tinta fija, no cambia con el tema */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -24,31 +30,36 @@ button:focus-visible {
 #proceso :focus-visible,
 #tecnologias :focus-visible,
 #contacto :focus-visible {
-  outline-color: var(--cream);
+  outline-color: var(--papel);
 }
 
 .servicio:hover :focus-visible {
-  outline-color: var(--cream);
+  outline-color: var(--papel);
 }
 
 /* ---------- Hero ---------- */
+/* El nombre va arriba, sobre la cabeza del arco, para que la foto no lo tape. Posición con top y no con
+   transform: GSAP anima el transform (entrada letra a letra y parallax). */
 .hero-nombre {
-  font-size: clamp(5rem, 28vw, 26rem);
+  position: absolute;
+  inset-inline: 0;
+  top: clamp(6.5rem, 15.5vh, 10rem);
+  text-align: center;
+  font-size: clamp(4.5rem, 22vw, 20rem);
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.04em;
-  color: rgba(38, 38, 42, 0.12);
+  color: rgb(var(--c-ink) / 0.5);
   white-space: nowrap;
-  margin-top: auto;
 }
 
 /* La foto vive en una banda que deja libres el menú (arriba) y el subtítulo + botón (abajo) */
 .hero-foto-wrap {
-  padding: 5rem 1rem 11rem;
+  padding: clamp(12rem, 33vh, 24rem) 1rem 13rem;
 }
 
 .hero-foto {
-  height: min(100%, calc(clamp(12rem, 24vw, 22rem) * 4 / 3));
+  height: min(100%, calc(clamp(17rem, 26vw, 25rem) * 4 / 3));
   aspect-ratio: 3 / 4;
   z-index: 5;
 }
@@ -57,25 +68,6 @@ button:focus-visible {
   .hero-foto-wrap {
     padding: 5.5rem 1rem 9.5rem;
   }
-}
-
-/* Sello giratorio: el exterior lo mueve GSAP (entrada y scroll), el interior gira por CSS */
-.hero-sello {
-  position: absolute;
-  z-index: 8;
-  width: clamp(5.5rem, 12vw, 9rem);
-  right: clamp(0.75rem, 8vw, 9rem);
-  bottom: clamp(9rem, 26vh, 15rem);
-}
-
-.sello-giro {
-  display: block;
-  width: 100%;
-  animation: giro 22s linear infinite;
-}
-
-@keyframes giro {
-  to { transform: rotate(360deg); }
 }
 
 /* ---------- Texto dividido (js/motion.js): cada palabra es una máscara ---------- */
@@ -152,7 +144,7 @@ button:focus-visible {
 }
 
 .servicio:last-child {
-  border-bottom: 1px solid rgba(38, 38, 42, 0.35);
+  border-bottom: 1px solid rgb(var(--c-ink) / 0.35);
 }
 
 .servicio::before {
@@ -170,7 +162,7 @@ button:focus-visible {
   position: absolute;
   inset: 0 0 auto 0;
   height: 1px;
-  background: rgba(38, 38, 42, 0.35);
+  background: rgb(var(--c-ink) / 0.35);
   transform-origin: left center;
 }
 
@@ -202,7 +194,7 @@ button:focus-visible {
 }
 
 @media (hover: hover) {
-  .servicio:hover { color: var(--cream); }
+  .servicio:hover { color: var(--papel); }
   .servicio:hover::before { transform: scaleY(1); }
 }
 
@@ -213,7 +205,7 @@ button:focus-visible {
   bottom: 0.5rem;
   left: 0.75rem;
   width: 2px;
-  background: rgba(241, 232, 223, 0.16);
+  background: rgb(var(--c-cream) / 0.16);
 }
 
 .proceso-linea {
@@ -237,7 +229,7 @@ button:focus-visible {
   translate: -50% 0;
   border-radius: 999px;
   background: var(--ink);
-  border: 2px solid rgba(241, 232, 223, 0.35);
+  border: 2px solid rgb(var(--c-cream) / 0.35);
   transition: background-color 0.4s ease, border-color 0.4s ease, scale 0.4s var(--ease-out);
 }
 
@@ -254,7 +246,7 @@ button:focus-visible {
   line-height: 0.85;
   letter-spacing: -0.04em;
   /* relleno tenue en vez de contorno: la fuente variable deja líneas internas visibles al trazar */
-  color: rgba(241, 232, 223, 0.16);
+  color: rgb(var(--c-cream) / 0.16);
   margin-bottom: 0.5rem;
   transition: color 0.5s ease;
 }
@@ -268,7 +260,7 @@ button:focus-visible {
   max-width: 24rem;
   font-size: 1.125rem;
   line-height: 1.55;
-  color: rgba(241, 232, 223, 0.85);
+  color: rgb(var(--c-cream) / 0.85);
 }
 
 @media (min-width: 768px) {
@@ -293,20 +285,6 @@ button:focus-visible {
 }
 
 /* ---------- Proyectos: entradas tipo ticket ---------- */
-.proyectos-fondo {
-  position: absolute;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: clamp(5rem, 22vw, 20rem);
-  font-weight: 800;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  color: rgba(38, 38, 42, 0.07);
-  white-space: nowrap;
-  pointer-events: none;
-  z-index: 0;
-}
 
 .ticket {
   --tono: var(--ink);
@@ -329,15 +307,16 @@ button:focus-visible {
 
 .ticket:nth-child(3n + 2) {
   --tono: var(--wine);
-  --sello-bg: var(--cream);
-  --sello-fg: var(--ink);
+  --texto: var(--papel);
+  --sello-bg: var(--papel);
+  --sello-fg: var(--noche);
 }
 
 .ticket:nth-child(3n) {
   --tono: var(--kraft);
   --texto: var(--ink);
   --sello-bg: var(--wine);
-  --sello-fg: var(--cream);
+  --sello-fg: var(--papel);
 }
 
 .ticket-img {
@@ -501,78 +480,109 @@ img.ticket-img {
 }
 
 .marquee-item:nth-child(even) {
-  color: rgba(241, 232, 223, 0.22);
+  color: rgb(var(--c-cream) / 0.22);
 }
 
-/* ---------- Preguntas ---------- */
-.faq-item {
-  border-top: 1px solid rgba(38, 38, 42, 0.3);
+/* ---------- Preguntas: la lista se queda quieta y la respuesta cambia en un panel ---------- */
+.faq-cuerpo {
+  display: grid;
+  gap: 2rem;
+  margin-top: 3rem;
+  align-items: start;
 }
 
-.faq-item:last-child {
-  border-bottom: 1px solid rgba(38, 38, 42, 0.3);
+@media (min-width: 900px) {
+  .faq-cuerpo { grid-template-columns: 1.1fr 1fr; gap: 3rem; }
+}
+
+.faq-lista {
+  display: grid;
+  border-top: 1px solid rgb(var(--c-ink) / 0.3);
 }
 
 .faq-btn {
   display: flex;
   width: 100%;
-  min-height: 44px;
+  min-height: 64px;
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.5rem 0;
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid rgb(var(--c-ink) / 0.3);
   text-align: left;
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.01em;
   cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.faq-mas {
-  position: relative;
+.faq-btn:hover { background: rgb(var(--c-kraft) / 0.6); }
+
+.faq-btn[aria-selected="true"] {
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-cream));
+}
+
+.faq-flecha {
   flex-shrink: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--wine);
-  transition: rotate 0.45s var(--ease-out);
+  width: 0.7rem;
+  height: 0.7rem;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  rotate: 45deg;
+  transition: translate 0.3s var(--ease-out);
 }
 
-.faq-mas::before,
-.faq-mas::after {
-  content: "";
-  position: absolute;
-  inset: 50% 0 auto 0;
-  height: 2px;
-  background: currentColor;
-  translate: 0 -50%;
+.faq-btn[aria-selected="true"] .faq-flecha { translate: 0.25rem 0; }
+
+.faq-panel {
+  min-height: 16rem;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgb(var(--c-kraft));
 }
 
-.faq-mas::after { rotate: 90deg; }
-
-.faq-resp {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s var(--ease-out);
+@media (min-width: 900px) {
+  .faq-panel { position: sticky; top: 7rem; }
 }
 
-.faq-resp > div {
-  overflow: hidden;
-  visibility: hidden;
-  transition: visibility 0s 0.45s;
+.faq-panel-q {
+  margin-bottom: 1rem;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
-.faq-resp p {
-  max-width: 34rem;
-  padding-bottom: 1.5rem;
+.faq-panel-r {
+  max-width: 30rem;
   font-size: 1.125rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
-.faq-item.abierto .faq-resp { grid-template-rows: 1fr; }
-.faq-item.abierto .faq-resp > div { visibility: visible; transition-delay: 0s; }
-.faq-item.abierto .faq-mas { rotate: 135deg; }
+.faq-panel-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 1.5rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.faq-panel.cambia .faq-panel-q,
+.faq-panel.cambia .faq-panel-r {
+  animation: faq-entra 0.45s var(--ease-out);
+}
+
+@keyframes faq-entra {
+  from { opacity: 0; translate: 0 0.5rem; }
+  to { opacity: 1; translate: 0 0; }
+}
 
 /* ---------- Táctil: respuesta inmediata al toque ---------- */
 @media (hover: none) {
@@ -591,11 +601,10 @@ img.ticket-img {
   .servicio,
   .servicio::before,
   .project-card,
-  .faq-resp,
-  .faq-mas {
+  .faq-btn,
+  .faq-flecha {
     transition: none;
   }
-  .sello-giro,
   .marquee-pista {
     animation: none;
   }
@@ -632,35 +641,7 @@ img.ticket-img {
   .ticket-btn-lleno:hover { background: transparent; color: var(--texto); }
 }
 
-/* Menú desplegable (móvil y tablet): panel bajo la píldora */
-.menu-panel {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
-  padding: 0.5rem;
-  background: var(--ink);
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
 
-.menu-panel[hidden] {
-  display: none;
-}
-
-.menu-panel a {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  padding: 0 1rem;
-  border-radius: 999px;
-  font-weight: 500;
-}
-
-.menu-panel a:hover,
-.menu-panel a:focus-visible {
-  background: rgba(241, 232, 223, 0.12);
-}
 
 /* Pantalla de carga sin parpadeo: la clase la pone un script del <head> y la quita main.js */
 html.cargando body {
@@ -673,4 +654,24 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   body { transition: none; }
+}
+
+/* Foto del hero: recorte sobre el arco; se ancla arriba para no cortar la cabeza */
+.hero-foto-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+}
+
+/* Móvil: el nombre más grande y la foto más cerca de él */
+@media (max-width: 767px) {
+  .hero-nombre {
+    font-size: 34vw;
+    top: 7.5rem;
+  }
+  .hero-foto-wrap {
+    padding-top: 12.5rem;
+  }
 }

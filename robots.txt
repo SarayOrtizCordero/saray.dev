@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sarayortizcordero.github.io/saray.dev/sitemap.xml

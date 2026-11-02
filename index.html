@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>/*DBG*/window.addEventListener("error",function(e){console.warn("DBG "+e.message+" @"+(e.filename||"").split("/").pop()+":"+e.lineno+" "+(e.error&&e.error.stack?e.error.stack.split("
+").slice(0,5).join(" | "):""))});</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Saray.dev | Desarrolladora web</title>
   <meta name="description" content="Saray, desarrolladora web full stack junior. Webs, landings, CRMs y paneles de inventario para negocios.">
   <meta name="theme-color" content="#26262A">
+  <!-- Al compartir el enlace (WhatsApp, Instagram, LinkedIn, X…). Las direcciones deben ser absolutas:
+       si cambias de dominio, actualiza canonical, og:url, og:image y twitter:image (y robots.txt / sitemap.xml). -->
+  <link rel="canonical" href="https://sarayortizcordero.github.io/saray.dev/">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Saray.dev">
   <meta property="og:locale" content="es_ES">
+  <meta property="og:url" content="https://sarayortizcordero.github.io/saray.dev/">
   <meta property="og:title" content="Saray.dev | Desarrolladora web">
   <meta property="og:description" content="Webs, landings, CRMs y paneles de inventario para negocios.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%239E1030'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='36' fill='%23F1E8DF'%3ES.%3C/text%3E%3C/svg%3E">
+  <meta property="og:image" content="https://sarayortizcordero.github.io/saray.dev/assets/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Saray, desarrolladora web, junto a su retrato con gorra y chaqueta roja">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Saray.dev | Desarrolladora web">
+  <meta name="twitter:description" content="Webs, landings, CRMs y paneles de inventario para negocios.">
+  <meta name="twitter:image" content="https://sarayortizcordero.github.io/saray.dev/assets/og.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2326262A'/%3E%3Cpath transform='translate(6 6) scale(.81)' d='M32 8C34 25 39 30 56 32 39 34 34 39 32 56 30 39 25 34 8 32 25 30 30 25 32 8Z' fill='%23F1E8DF'/%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +37,13 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: { ink: '#26262A', wine: '#9E1030', cream: '#F1E8DF', kraft: '#E0D0BE' },
+          // ink/cream/kraft salen de variables CSS (css/styles.css) para poder cambiar de tema sin tocar las clases
+          colors: {
+            ink: 'rgb(var(--c-ink) / <alpha-value>)',
+            cream: 'rgb(var(--c-cream) / <alpha-value>)',
+            kraft: 'rgb(var(--c-kraft) / <alpha-value>)',
+            wine: '#9E1030'
+          },
           fontFamily: {
             display: ['"Bricolage Grotesque"', 'sans-serif'],
             body: ['"Instrument Sans"', 'sans-serif']
@@ -31,64 +53,104 @@
     };
   </script>
   <!-- Oculta la página hasta que Tailwind (CDN) y las fuentes estén listos: evita el parpadeo sin estilos. -->
-  <script>document.documentElement.classList.add('cargando');</script>
+  <!-- Tema: el guardado por la persona o, si no hay, el del sistema. Se fija aquí para que no parpadee. -->
+  <script>
+    (function () {
+      var raiz = document.documentElement;
+      raiz.classList.add('cargando');
+      var tema = 'claro';
+      try {
+        tema = localStorage.getItem('tema') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'oscuro' : 'claro');
+      } catch (e) {}
+      raiz.dataset.tema = tema;
+    })();
+  </script>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/interfaz.css">
 </head>
-<body class="bg-cream text-ink font-body antialiased">
+<body class="fondo-cream text-ink font-body antialiased">
 
-  <nav id="menu" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max max-w-[calc(100vw-1rem)] whitespace-nowrap flex items-center gap-6 rounded-full bg-ink text-cream px-5 py-1 shadow-lg" aria-label="Principal">
-    <a href="#inicio" class="inline-flex min-h-[44px] items-center font-display font-semibold text-lg">Saray<span class="text-wine">.</span>dev</a>
-    <ul class="hidden lg:flex items-center gap-5 text-sm">
-      <li><a href="#sobre-mi" class="underline-offset-4 hover:underline">Sobre mí</a></li>
-      <li><a href="#servicios" class="underline-offset-4 hover:underline">Servicios</a></li>
-      <li><a href="#proceso" class="underline-offset-4 hover:underline">Proceso</a></li>
-      <li><a href="#proyectos" class="underline-offset-4 hover:underline">Proyectos</a></li>
-      <li><a href="#tecnologias" class="underline-offset-4 hover:underline">Tecnologías</a></li>
-      <li><a href="#preguntas" class="underline-offset-4 hover:underline">Preguntas</a></li>
-      <li><a href="#contacto" class="underline-offset-4 hover:underline">Contacto</a></li>
+  <a href="#contenido" class="salto">Saltar al contenido</a>
+
+  <!-- Menú: barra flotante. En escritorio y tablet muestra lo esencial; en móvil, logo + Menú + Contacto. -->
+  <nav id="menu" class="menu-nav" aria-label="Principal">
+    <a href="#inicio" class="menu-logo">
+      <svg viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><path d="M32 6C34 24 40 30 58 32 40 34 34 40 32 58 30 40 24 34 6 32 24 30 30 24 32 6Z" fill="currentColor"/></svg>
+      <span>Saray<span class="menu-punto">.</span>dev</span>
+    </a>
+
+    <ul class="menu-links">
+      <li><a href="#sobre-mi" data-sec="sobre-mi">Sobre mí</a></li>
+      <li><a href="#servicios" data-sec="servicios">Servicios</a></li>
+      <li><a href="#proyectos" data-sec="proyectos">Proyectos</a></li>
     </ul>
-    <button id="menu-boton" type="button" aria-expanded="false" aria-controls="menu-panel" class="lg:hidden inline-flex min-h-[44px] items-center text-sm font-medium">Menú</button>
-    <a href="#contacto" class="lg:hidden inline-flex min-h-[44px] items-center rounded-full bg-wine text-cream text-sm font-medium px-4">Contacto</a>
 
-    <div id="menu-panel" class="menu-panel lg:hidden" hidden>
+    <div class="menu-acciones">
+      <button type="button" class="tema-boton" data-tema-boton aria-pressed="false" aria-label="Activar modo oscuro">
+        <svg class="icono-luna" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="icono-sol" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button id="menu-boton" type="button" class="menu-boton" aria-expanded="false" aria-controls="menu-panel">Menú</button>
+      <a href="#contacto" class="menu-cta" data-sec="contacto">Contacto</a>
+    </div>
+
+    <div id="menu-panel" class="menu-panel" hidden>
       <ul>
         <li><a href="#sobre-mi">Sobre mí</a></li>
         <li><a href="#servicios">Servicios</a></li>
         <li><a href="#proceso">Proceso</a></li>
         <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#tecnologias">Tecnologías</a></li>
         <li><a href="#preguntas">Preguntas</a></li>
-        <li><a href="#contacto">Contacto</a></li>
       </ul>
+      <div class="menu-panel-pie">
+        <button type="button" class="tema-boton tema-boton-texto" data-tema-boton aria-pressed="false" aria-label="Activar modo oscuro">
+          <svg class="icono-luna" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="icono-sol" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <span class="tema-texto">Modo oscuro</span>
+        </button>
+        <a href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://github.com/SarayOrtizCordero" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
     </div>
   </nav>
 
-  <main>
+  <!-- Cortina de transición entre secciones y ventana de caso (se controlan desde js/) -->
+  <div id="cortina" class="cortina" aria-hidden="true"><span id="cortina-texto" class="cortina-texto"></span></div>
+
+  <dialog id="caso" class="caso" aria-labelledby="caso-titulo">
+    <div class="caso-cuerpo">
+      <button type="button" class="caso-cerrar" data-cerrar aria-label="Cerrar caso"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      <img id="caso-img" class="caso-img" alt="" width="1000" height="498">
+      <div class="caso-texto">
+        <p id="caso-nota" class="caso-nota"></p>
+        <h3 id="caso-titulo" class="caso-titulo"></h3>
+        <h4>El reto</h4>
+        <p id="caso-reto"></p>
+        <h4>Lo que hice</h4>
+        <p id="caso-hice"></p>
+        <ul id="caso-stack" class="caso-stack" aria-label="Tecnologías"></ul>
+        <div class="caso-acciones">
+          <a id="caso-demo" class="ticket-btn ticket-btn-lleno" target="_blank" rel="noopener noreferrer">Ver demo</a>
+          <a id="caso-codigo" class="ticket-btn" target="_blank" rel="noopener noreferrer">Ver código</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <main id="contenido" tabindex="-1">
     <!-- Inicio -->
     <section id="inicio" data-bg="cream" class="relative min-h-screen overflow-hidden flex flex-col items-center justify-center px-4 text-ink">
       <h1 id="hero-nombre" class="hero-nombre font-display select-none">Saray</h1>
 
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none hero-foto-wrap">
-        <div id="hero-foto" class="hero-foto flex items-center justify-center rounded-t-[999px] rounded-b-3xl border-2 border-dashed border-ink/40 bg-cream/80 text-ink/70 text-center font-medium px-4">
-          <span>Aquí va tu foto</span>
+        <div id="hero-foto" class="hero-foto overflow-hidden rounded-t-[999px] rounded-b-3xl bg-wine">
+          <img id="hero-foto-img" src="assets/foto/foto-6.webp" alt="Retrato de Saray con gorra y chaqueta roja, apoyando la barbilla en la mano" width="900" height="1599" fetchpriority="high" class="hero-foto-img">
         </div>
       </div>
 
-      <div id="hero-sello" class="hero-sello" aria-hidden="true">
-        <svg class="sello-giro" viewBox="0 0 200 200">
-          <defs><path id="sello-circulo" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"/></defs>
-          <circle cx="100" cy="100" r="98" fill="#9E1030"/>
-          <circle cx="100" cy="100" r="92" fill="none" stroke="#F1E8DF" stroke-width="1" stroke-dasharray="3 4"/>
-          <text font-family="Bricolage Grotesque, sans-serif" font-weight="600" font-size="17" fill="#F1E8DF" letter-spacing="1">
-            <textPath href="#sello-circulo" textLength="470" lengthAdjust="spacing">webs a medida · crms · paneles de inventario ·</textPath>
-          </text>
-          <text x="100" y="116" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="52" fill="#F1E8DF">S.</text>
-        </svg>
-      </div>
-
       <div class="relative z-10 mt-auto pb-12 flex flex-col items-center gap-5 text-center">
-        <p class="hero-lema font-display text-xl md:text-2xl font-medium max-w-xl">Desarrolladora web: webs, CRMs y paneles de inventario para negocios</p>
-        <a id="hero-boton" href="#contacto" class="inline-flex min-h-[44px] items-center rounded-full bg-wine text-cream font-medium px-8 py-3 hover:brightness-110">Contactar</a>
+        <p class="hero-lema font-display text-xl md:text-2xl font-medium max-w-xl">Webs y sistemas para tu negocio. ¿Hablamos?</p>
+        <a id="hero-boton" href="#contacto" class="inline-flex min-h-[44px] items-center rounded-full bg-wine text-cream font-medium px-8 py-3 hover:brightness-110">Cuéntame tu idea</a>
       </div>
     </section>
 
@@ -111,7 +173,7 @@
             </div>
             <div>
               <dt class="font-display text-sm font-semibold text-wine">Trabajo con</dt>
-              <dd class="font-display text-2xl font-semibold leading-tight">HTML, CSS, JavaScript y PHP</dd>
+              <dd class="font-display text-2xl font-semibold leading-tight">HTML, CSS, JavaScript, PHP y Next.js</dd>
             </div>
             <div>
               <dt class="font-display text-sm font-semibold text-wine">Para quién</dt>
@@ -202,13 +264,12 @@
 
     <!-- Proyectos -->
     <section id="proyectos" data-bg="cream" class="relative min-h-screen overflow-x-clip px-6 py-24 md:px-12 text-ink">
-      <span class="proyectos-fondo font-display select-none" aria-hidden="true">Proyectos</span>
       <div class="relative z-10 mx-auto w-full max-w-6xl">
         <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-16">Proyectos</h2>
+        <!-- Pestañas de filtro: las genera js/projects.js a partir de las categorías con proyectos -->
+        <div class="proy-tabs" id="proy-tabs" role="tablist" aria-label="Filtrar proyectos por tipo"></div>
+        <p id="proy-cuenta" class="sr-only" role="status" aria-live="polite"></p>
         <div class="cards grid w-full grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"></div>
-        <div class="mt-12 flex justify-center">
-          <button id="proyectos-mas" type="button" aria-expanded="false" class="hidden min-h-[44px] rounded-full bg-ink text-cream font-medium px-8 py-3 hover:bg-wine">Ver más proyectos</button>
-        </div>
       </div>
     </section>
 
@@ -217,47 +278,38 @@
       <h2 class="px-6 md:px-12 mx-auto w-full max-w-6xl text-center font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-14">Mi caja de herramientas</h2>
 
       <ul class="sr-only">
-        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>Git / GitHub</li><li>Vercel</li><li>Tailwind</li><li>GSAP</li>
+        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>Next.js</li><li>Git / GitHub</li><li>Vercel</li><li>Tailwind</li><li>GSAP</li>
       </ul>
 
       <div class="marquee" aria-hidden="true">
-        <div class="marquee-pista"><span class="marquee-item">HTML</span><span class="marquee-item">CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">PHP</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Vercel</span><span class="marquee-item">Tailwind</span><span class="marquee-item">GSAP</span></div>
-        <div class="marquee-pista"><span class="marquee-item">HTML</span><span class="marquee-item">CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">PHP</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Vercel</span><span class="marquee-item">Tailwind</span><span class="marquee-item">GSAP</span></div>
+        <div class="marquee-pista"><span class="marquee-item">HTML</span><span class="marquee-item">CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">PHP</span><span class="marquee-item">Next.js</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Vercel</span><span class="marquee-item">Tailwind</span><span class="marquee-item">GSAP</span></div>
+        <div class="marquee-pista"><span class="marquee-item">HTML</span><span class="marquee-item">CSS</span><span class="marquee-item">JavaScript</span><span class="marquee-item">PHP</span><span class="marquee-item">Next.js</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Vercel</span><span class="marquee-item">Tailwind</span><span class="marquee-item">GSAP</span></div>
       </div>
       <div class="marquee marquee-inversa mt-4" aria-hidden="true">
-        <div class="marquee-pista"><span class="marquee-item">GSAP</span><span class="marquee-item">Tailwind</span><span class="marquee-item">Vercel</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">PHP</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS</span><span class="marquee-item">HTML</span></div>
-        <div class="marquee-pista"><span class="marquee-item">GSAP</span><span class="marquee-item">Tailwind</span><span class="marquee-item">Vercel</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">PHP</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS</span><span class="marquee-item">HTML</span></div>
+        <div class="marquee-pista"><span class="marquee-item">GSAP</span><span class="marquee-item">Tailwind</span><span class="marquee-item">Vercel</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Next.js</span><span class="marquee-item">PHP</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS</span><span class="marquee-item">HTML</span></div>
+        <div class="marquee-pista"><span class="marquee-item">GSAP</span><span class="marquee-item">Tailwind</span><span class="marquee-item">Vercel</span><span class="marquee-item">Git / GitHub</span><span class="marquee-item">Next.js</span><span class="marquee-item">PHP</span><span class="marquee-item">JavaScript</span><span class="marquee-item">CSS</span><span class="marquee-item">HTML</span></div>
       </div>
     </section>
 
     <!-- Preguntas -->
     <section id="preguntas" data-bg="cream" class="px-6 py-28 md:px-12 text-ink">
-      <div class="mx-auto grid w-full max-w-6xl gap-12 md:grid-cols-[1fr_1.5fr]">
-        <div class="md:sticky md:top-28 md:self-start">
-          <h2 class="font-display text-5xl md:text-6xl font-extrabold tracking-tight">Preguntas frecuentes</h2>
-          <p class="mt-6 max-w-xs text-lg">Lo que suelen preguntarme antes de empezar.</p>
-        </div>
+      <div class="mx-auto w-full max-w-6xl">
+        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight">Preguntas frecuentes</h2>
+        <p class="mt-5 max-w-md text-lg">Lo que suelen preguntarme antes de empezar.</p>
 
-        <div class="faq-lista">
-          <div class="faq-item">
-            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-1" id="faq-b1"><span>¿Qué necesito para empezar?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
-            <div class="faq-resp" id="faq-1" role="region" aria-labelledby="faq-b1"><div><p>Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos.</p></div></div>
+        <!-- Las preguntas se quedan siempre en su sitio; la respuesta cambia en el panel de al lado -->
+        <div class="faq-cuerpo">
+          <div class="faq-lista" role="tablist" aria-orientation="vertical" aria-label="Preguntas frecuentes">
+          <button class="faq-btn" type="button" role="tab" id="faq-b1" aria-selected="true" aria-controls="faq-panel" tabindex="0" data-resp="Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos."><span>¿Qué necesito para empezar?</span><span class="faq-flecha" aria-hidden="true"></span></button>
+          <button class="faq-btn" type="button" role="tab" id="faq-b2" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="Depende de lo que necesites: una landing no cuesta lo mismo que un CRM. Cuéntame tu caso y te preparo un presupuesto."><span>¿Cuánto cuesta?</span><span class="faq-flecha" aria-hidden="true"></span></button>
+          <button class="faq-btn" type="button" role="tab" id="faq-b3" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="Depende del tamaño del proyecto. Después de la primera conversación te doy un plazo concreto."><span>¿Cuánto tarda?</span><span class="faq-flecha" aria-hidden="true"></span></button>
+          <button class="faq-btn" type="button" role="tab" id="faq-b4" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="No. Te explico cómo usar y actualizar lo importante, paso a paso."><span>¿Tendré que saber programar para usarla?</span><span class="faq-flecha" aria-hidden="true"></span></button>
+          <button class="faq-btn" type="button" role="tab" id="faq-b5" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="Sí. Cada web se diseña pensando en móvil, tablet y ordenador."><span>¿Se verá bien en el móvil?</span><span class="faq-flecha" aria-hidden="true"></span></button>
           </div>
-          <div class="faq-item">
-            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-2" id="faq-b2"><span>¿Cuánto cuesta?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
-            <div class="faq-resp" id="faq-2" role="region" aria-labelledby="faq-b2"><div><p>Depende de lo que necesites: una landing no cuesta lo mismo que un CRM. Cuéntame tu caso y te preparo un presupuesto.</p></div></div>
-          </div>
-          <div class="faq-item">
-            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-3" id="faq-b3"><span>¿Cuánto tarda?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
-            <div class="faq-resp" id="faq-3" role="region" aria-labelledby="faq-b3"><div><p>Depende del tamaño del proyecto. Después de la primera conversación te doy un plazo concreto.</p></div></div>
-          </div>
-          <div class="faq-item">
-            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-4" id="faq-b4"><span>¿Tendré que saber programar para usarla?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
-            <div class="faq-resp" id="faq-4" role="region" aria-labelledby="faq-b4"><div><p>No. Te explico cómo usar y actualizar lo importante, paso a paso.</p></div></div>
-          </div>
-          <div class="faq-item">
-            <h3><button class="faq-btn" type="button" aria-expanded="false" aria-controls="faq-5" id="faq-b5"><span>¿Se verá bien en el móvil?</span><span class="faq-mas" aria-hidden="true"></span></button></h3>
-            <div class="faq-resp" id="faq-5" role="region" aria-labelledby="faq-b5"><div><p>Sí. Cada web se diseña pensando en móvil, tablet y ordenador.</p></div></div>
+          <div class="faq-panel" id="faq-panel" role="tabpanel" aria-labelledby="faq-b1" tabindex="0">
+            <p class="faq-panel-q" id="faq-panel-q">¿Qué necesito para empezar?</p>
+            <p class="faq-panel-r" id="faq-panel-r">Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos.</p>
+            <a href="#contacto" class="faq-panel-cta">¿Tienes otra duda? Escríbeme</a>
           </div>
         </div>
       </div>
@@ -274,12 +326,40 @@
           <a id="contacto-cv" class="contacto-boton contacto-cv hidden min-h-[44px] rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center">Descargar CV</a>
         </div>
       </div>
-      <footer class="mt-16 flex flex-col items-center justify-between gap-2 border-t border-cream/30 py-6 text-sm sm:flex-row">
-        <p>&copy; <span id="contacto-anio">2026</span> Saray.dev</p>
-        <nav class="flex items-center gap-6" aria-label="Redes">
-          <a href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:decoration-2">Instagram</a>
-          <a href="https://github.com/SarayOrtizCordero" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:decoration-2">GitHub</a>
-        </nav>
+      <footer class="pie">
+        <div class="pie-grid">
+          <div class="pie-marca">
+            <p class="pie-logo">Saray<span>.</span>dev</p>
+            <p>Desarrolladora web full stack junior. Webs, CRMs y paneles de inventario para negocios.</p>
+          </div>
+          <nav aria-label="Secciones">
+            <p class="pie-titulo">Navegación</p>
+            <ul>
+              <li><a href="#sobre-mi">Sobre mí</a></li>
+              <li><a href="#servicios">Servicios</a></li>
+              <li><a href="#proceso">Proceso</a></li>
+              <li><a href="#proyectos">Proyectos</a></li>
+              <li><a href="#preguntas">Preguntas</a></li>
+            </ul>
+          </nav>
+          <nav aria-label="Contacto y redes">
+            <p class="pie-titulo">Contacto</p>
+            <ul>
+              <li><a href="mailto:sarayortizcordero4@gmail.com">Correo</a></li>
+              <li><a href="https://wa.me/34675843655" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+              <li><a href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+              <li><a href="https://github.com/SarayOrtizCordero" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="pie-base">
+          <p>&copy; <span id="contacto-anio">2026</span> Saray.dev. Todos los derechos reservados.</p>
+          <p class="pie-hecho">Hecho con HTML, CSS, JavaScript y GSAP</p>
+          <button type="button" id="subir" class="pie-subir">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            Volver arriba
+          </button>
+        </div>
       </footer>
     </section>
   </main>
@@ -297,5 +377,6 @@
   <script src="js/tech.js"></script>
   <script src="js/faq.js"></script>
   <script src="js/contact.js"></script>
+  <script src="js/interfaz.js"></script>
 </body>
 </html>

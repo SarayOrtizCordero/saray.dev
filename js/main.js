@@ -25,6 +25,7 @@
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
     gsap.ticker.lagSmoothing(0);
+    window.lenis = lenis; // lo usan js/interfaz.js (transición, volver arriba) y js/projects.js (ventana de caso)
   }
 
   // Todas las anclas internas (menú, botones del hero y de "Sobre mí") pasan por Lenis
@@ -36,7 +37,10 @@
       try { target = document.querySelector(href); } catch (err) { target = null; }
       if (!target) return;
       e.preventDefault();
-      if (lenis && !window.reduceMotion) {
+      // js/interfaz.js decide entre desplazamiento suave y la cortina de transición
+      if (typeof window.irA === 'function') {
+        window.irA(target, link);
+      } else if (lenis && !window.reduceMotion) {
         lenis.scrollTo(target);
       } else {
         target.scrollIntoView({ behavior: window.reduceMotion ? 'auto' : 'smooth' });
@@ -67,10 +71,10 @@
   }
 
   // Fondo del body según la sección visible (clases bg-* de Tailwind, transición en CSS)
-  var BG_CLASSES = ['bg-cream', 'bg-ink', 'bg-wine'];
+  var BG_CLASSES = ['fondo-cream', 'fondo-ink', 'fondo-wine'];
   function setBackground(name) {
     document.body.classList.remove.apply(document.body.classList, BG_CLASSES);
-    document.body.classList.add('bg-' + name);
+    document.body.classList.add('fondo-' + name);
   }
 
   if (hasGsap) {

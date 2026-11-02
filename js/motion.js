@@ -95,16 +95,6 @@ function initMotion() {
         });
     }
 
-    // Palabra gigante "Proyectos" que se desliza lateralmente
-    var fondo = document.querySelector('.proyectos-fondo');
-    if (fondo) {
-      gsap.fromTo(fondo, { x: -180 }, {
-        x: 180,
-        ease: 'none',
-        scrollTrigger: { trigger: '#proyectos', start: 'top bottom', end: 'bottom top', scrub: true }
-      });
-    }
-
     // Menú: se esconde al bajar y vuelve al subir
     var menu = document.getElementById('menu');
     var stMenu = ScrollTrigger.create({
