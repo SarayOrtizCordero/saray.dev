@@ -48,13 +48,16 @@
     });
   });
 
-  // Menú móvil (pantalla completa): se cierra con Escape, al elegir una sección o al pasar a tablet/escritorio
+  // Menú móvil (tarjeta bajo la barra): se cierra con la X, tocando fuera, con Esc, al elegir una sección
+  // o al pasar a tablet/escritorio
   var menuNav = document.getElementById('menu');
   var menuBoton = document.getElementById('menu-boton');
   var menuPanel = document.getElementById('menu-panel');
+  var menuFondo = document.getElementById('menu-fondo');
   function setMenu(abierto) {
     if (!menuBoton || !menuPanel) return;
     menuPanel.hidden = !abierto;
+    if (menuFondo) menuFondo.hidden = !abierto;
     menuBoton.setAttribute('aria-expanded', String(abierto));
     menuBoton.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
     menuNav.classList.toggle('abierto', abierto);
@@ -62,7 +65,11 @@
   }
   if (menuBoton && menuPanel) {
     menuBoton.addEventListener('click', function () { setMenu(menuPanel.hidden); });
-    menuPanel.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+    menuPanel.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenu(false);
+      else if (e.target.closest('[data-cerrar-menu]')) { setMenu(false); menuBoton.focus(); }
+    });
+    if (menuFondo) menuFondo.addEventListener('click', function () { setMenu(false); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !menuPanel.hidden) { setMenu(false); menuBoton.focus(); }
     });

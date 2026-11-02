@@ -4,10 +4,17 @@ module.exports = {
   content: ['./index.html', './js/**/*.js'],
   theme: {
     extend: {
-      colors: { ink: '#26262A', wine: '#9E1030', cream: '#F1E8DF' },
+      // ink/cream/kraft salen de variables CSS (css/styles.css y css/interfaz.css):
+      // así el modo oscuro cambia los colores sin tocar las clases
+      colors: {
+        ink: 'rgb(var(--c-ink) / <alpha-value>)',
+        cream: 'rgb(var(--c-cream) / <alpha-value>)',
+        kraft: 'rgb(var(--c-kraft) / <alpha-value>)',
+        wine: '#9E1030'
+      },
       fontFamily: {
-        display: ['Poppins', 'sans-serif'],
-        body: ['"DM Sans"', 'sans-serif']
+        display: ['"Bricolage Grotesque"', 'sans-serif'],
+        body: ['"Instrument Sans"', 'sans-serif']
       }
     }
   },
