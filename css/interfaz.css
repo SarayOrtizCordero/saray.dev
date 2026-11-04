@@ -92,7 +92,7 @@ html[data-tema="oscuro"] .fondo-ink { background-color: #141417; }
   .menu-nav {
     top: 1rem;
     margin-inline: auto;
-    width: min(46rem, calc(100% - 2rem));
+    width: min(54rem, calc(100% - 2rem));
     padding: 0.25rem 0.5rem 0.25rem 1.25rem;
   }
 }
@@ -128,6 +128,12 @@ html[data-tema="oscuro"] .fondo-ink { background-color: #141417; }
 
 @media (min-width: 768px) {
   .menu-links { display: flex; }
+}
+
+/* Tablet: caben tres enlaces; Proceso y Preguntas aparecen desde 1024 px */
+@media (max-width: 1023px) {
+  .menu-links li:nth-child(3),
+  .menu-links li:nth-child(5) { display: none; }
 }
 
 .menu-links a {
@@ -401,8 +407,8 @@ html.menu-abierto { overflow: hidden; }
 
 .proy-tab-n {
   margin-left: 0.4rem;
-  font-size: 0.75rem;
-  opacity: 0.65;
+  font-size: 0.8125rem;
+  opacity: 0.85;
 }
 
 .project-card.filtrado { display: none; }
@@ -458,10 +464,7 @@ html.menu-abierto { overflow: hidden; }
   .ticket:hover .ticket-marco .ticket-img { scale: 1.08; }
   .ticket:hover .ticket-marco::after { translate: 120% 0; transition: translate 0.9s var(--ease-out); }
   .ticket:hover .ticket-ver { opacity: 1; translate: 0 0; }
-  .project-card:hover .ticket-sello { rotate: -24deg; scale: 1.12; }
 }
-
-.ticket-sello { transition: rotate 0.6s var(--ease-out), scale 0.4s var(--ease-out); }
 
 /* =====================================================================
    VENTANA DE CASO
@@ -614,7 +617,7 @@ html.caso-abierto { overflow: hidden; }
 .pie li a {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   text-underline-offset: 4px;
 }
 
@@ -682,7 +685,6 @@ html.caso-abierto { overflow: hidden; }
   .proy-tab,
   .ticket-marco img,
   .ticket-ver,
-  .ticket-sello,
   .caso-cerrar,
   .salto,
   .menu-barras span,

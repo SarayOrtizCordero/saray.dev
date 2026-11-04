@@ -52,17 +52,6 @@ function initMotion() {
   var parrafo = document.getElementById('sobre-mi-texto');
   var parrafoSplit = parrafo ? splitText(parrafo, 'words') : null;
 
-  // Barra de progreso de lectura (ambos tamaños)
-  var barra = document.createElement('div');
-  barra.id = 'progreso';
-  barra.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(barra);
-  gsap.to(barra, {
-    scaleX: 1,
-    ease: 'none',
-    scrollTrigger: { trigger: document.documentElement, start: 'top top', end: 'bottom bottom', scrub: 0.2 }
-  });
-
   var mm = gsap.matchMedia();
 
   // =====================================================================

@@ -2,7 +2,11 @@
   // Siempre se empieza arriba al recargar (salvo que la URL lleve un ancla): así las entradas animadas
   // se ven en orden y ningún bloque queda oculto por haber cargado con el scroll ya restaurado.
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  if (!location.hash) window.scrollTo(0, 0);
+  if (!location.hash) {
+    window.scrollTo(0, 0);
+    // El navegador puede restaurar el scroll al terminar de cargar: se vuelve a fijar arriba
+    window.addEventListener('load', function () { window.scrollTo(0, 0); });
+  }
 
   window.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

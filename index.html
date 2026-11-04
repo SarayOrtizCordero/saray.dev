@@ -35,6 +35,13 @@
     (function () {
       var raiz = document.documentElement;
       raiz.classList.add('cargando');
+      // Al recargar siempre se empieza arriba: sin scroll restaurado, y sin ancla si fue una recarga
+      try {
+        history.scrollRestoration = 'manual';
+        var nav = performance.getEntriesByType('navigation')[0];
+        if (nav && nav.type === 'reload' && location.hash) history.replaceState(null, '', location.pathname + location.search);
+        window.addEventListener('pagehide', function () { window.scrollTo(0, 0); });
+      } catch (e) {}
       var tema = 'claro';
       try {
         tema = localStorage.getItem('tema') === 'oscuro' ? 'oscuro' : 'claro';
@@ -61,7 +68,9 @@
     <ul class="menu-links">
       <li><a href="#sobre-mi" data-sec="sobre-mi">Sobre mí</a></li>
       <li><a href="#servicios" data-sec="servicios">Servicios</a></li>
+      <li><a href="#proceso" data-sec="proceso">Proceso</a></li>
       <li><a href="#proyectos" data-sec="proyectos">Proyectos</a></li>
+      <li><a href="#preguntas" data-sec="preguntas">Preguntas</a></li>
     </ul>
 
     <div class="menu-acciones">
@@ -80,7 +89,6 @@
   <div id="menu-panel" class="menu-panel" role="dialog" aria-label="Menú" hidden>
     <div class="menu-panel-cabeza">
       <p class="menu-panel-titulo">Menú</p>
-      <button type="button" class="menu-panel-cerrar" data-cerrar-menu aria-label="Cerrar menú"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
     </div>
     <ul class="menu-panel-links">
       <li><a href="#sobre-mi">Sobre mí</a></li>
@@ -133,7 +141,7 @@
       </div>
 
       <div class="relative z-10 mt-auto pb-12 flex flex-col items-center gap-5 text-center">
-        <p class="hero-lema font-display text-xl md:text-2xl font-medium max-w-xl">Webs y sistemas para tu negocio. ¿Hablamos?</p>
+        <p class="hero-lema font-display text-xl md:text-2xl font-medium max-w-xl">Desarrolladora web para negocios. ¿Hablamos?</p>
         <a id="hero-boton" href="#contacto" class="inline-flex min-h-[44px] items-center rounded-full bg-wine text-cream font-medium px-8 py-3 hover:brightness-110">Cuéntame tu idea</a>
       </div>
     </section>
@@ -142,9 +150,9 @@
     <section id="sobre-mi" data-bg="cream" class="min-h-screen px-6 py-24 md:px-12 flex items-center text-ink">
       <div class="mx-auto grid w-full max-w-6xl gap-16 md:grid-cols-[1.7fr_1fr] md:items-center">
         <div>
-          <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-10">Sobre mí</h2>
+          <h2 class="font-display text-4xl md:text-6xl font-extrabold tracking-tight mb-10">Sobre mí</h2>
           <p id="sobre-mi-texto" class="max-w-3xl text-2xl md:text-4xl leading-snug">
-            Soy Saray, desarrolladora web full stack junior. Me gusta convertir las necesidades de un negocio en webs, landings, CRMs y paneles de inventario que sean claros, cuidados y fáciles de usar. Trabajo cerca de cada cliente para entender qué necesita de verdad y construirlo paso a paso.
+            Soy Saray, desarrolladora web full stack junior. Convierto lo que necesita tu negocio en webs y sistemas claros, cuidados y fáciles de usar, y te voy enseñando avances para que opines a tiempo.
           </p>
           <a id="sobre-mi-boton" href="#servicios" class="mt-10 inline-flex min-h-[44px] items-center rounded-full bg-ink text-cream font-medium px-8 py-3 hover:bg-wine">Qué puedo hacer</a>
         </div>
@@ -156,12 +164,20 @@
               <dd class="font-display text-2xl font-semibold leading-tight">Desarrolladora full stack junior</dd>
             </div>
             <div>
-              <dt class="font-display text-sm font-semibold text-wine">Trabajo con</dt>
-              <dd class="font-display text-2xl font-semibold leading-tight">HTML, CSS, JavaScript, PHP y Next.js</dd>
+              <dt class="font-display text-sm font-semibold text-wine">Para quién</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">Negocios y autónomos que quieren una web o gestionarse mejor</dd>
             </div>
             <div>
-              <dt class="font-display text-sm font-semibold text-wine">Para quién</dt>
-              <dd class="font-display text-2xl font-semibold leading-tight">Negocios que necesitan web, CRM o inventario</dd>
+              <dt class="font-display text-sm font-semibold text-wine">Cómo trabajo</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">Te enseño avances antes de dar nada por cerrado</dd>
+            </div>
+            <div>
+              <dt class="font-display text-sm font-semibold text-wine">Mi enfoque</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">Herramientas claras, rápidas y fáciles de usar</dd>
+            </div>
+            <div>
+              <dt class="font-display text-sm font-semibold text-wine">Respuesta</dt>
+              <dd class="font-display text-2xl font-semibold leading-tight">En menos de 24 horas</dd>
             </div>
           </dl>
         </aside>
@@ -171,7 +187,7 @@
     <!-- Servicios -->
     <section id="servicios" data-bg="cream" class="px-6 py-24 md:px-12 text-ink">
       <div class="mx-auto w-full max-w-6xl">
-        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-14">¿En qué puedo ayudarte?</h2>
+        <h2 class="font-display text-4xl md:text-6xl font-extrabold tracking-tight mb-14">¿En qué puedo ayudarte?</h2>
         <ul id="servicios-lista" class="servicios-lista">
           <li class="servicio">
             <span class="servicio-linea" aria-hidden="true"></span>
@@ -204,7 +220,7 @@
     <!-- Proceso -->
     <section id="proceso" data-bg="ink" class="overflow-x-clip bg-ink text-cream px-6 py-28 md:px-12">
       <div class="mx-auto w-full max-w-5xl">
-        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-20 md:text-center">Así trabajamos juntos</h2>
+        <h2 class="font-display text-4xl md:text-6xl font-extrabold tracking-tight mb-20 md:text-center">Así trabajamos juntos</h2>
 
         <div class="proceso-lista relative">
           <div class="proceso-linea-fondo" aria-hidden="true"><div class="proceso-linea"></div></div>
@@ -259,7 +275,7 @@
 
     <!-- Tecnologías -->
     <section id="tecnologias" data-bg="ink" class="relative overflow-hidden bg-ink text-cream py-24">
-      <h2 class="px-6 md:px-12 mx-auto w-full max-w-6xl text-center font-display text-5xl md:text-7xl font-extrabold tracking-tight mb-14">Mi caja de herramientas</h2>
+      <h2 class="px-6 md:px-12 mx-auto w-full max-w-6xl text-center font-display text-4xl md:text-6xl font-extrabold tracking-tight mb-14">Mi caja de herramientas</h2>
 
       <ul class="sr-only">
         <li>HTML</li><li>CSS</li><li>JavaScript</li><li>PHP</li><li>Next.js</li><li>Git / GitHub</li><li>Vercel</li><li>Tailwind</li><li>GSAP</li>
@@ -278,37 +294,47 @@
     <!-- Preguntas -->
     <section id="preguntas" data-bg="cream" class="px-6 py-28 md:px-12 text-ink">
       <div class="mx-auto w-full max-w-6xl">
-        <h2 class="font-display text-5xl md:text-7xl font-extrabold tracking-tight">Preguntas frecuentes</h2>
+        <h2 class="font-display text-4xl md:text-6xl font-extrabold tracking-tight">Preguntas frecuentes</h2>
         <p class="mt-5 max-w-md text-lg">Lo que suelen preguntarme antes de empezar.</p>
 
-        <!-- Las preguntas se quedan siempre en su sitio; la respuesta cambia en el panel de al lado -->
-        <div class="faq-cuerpo">
-          <div class="faq-lista" role="tablist" aria-orientation="vertical" aria-label="Preguntas frecuentes">
-          <button class="faq-btn" type="button" role="tab" id="faq-b1" aria-selected="true" aria-controls="faq-panel" tabindex="0" data-resp="Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos."><span>¿Qué necesito para empezar?</span><span class="faq-flecha" aria-hidden="true"></span></button>
-          <button class="faq-btn" type="button" role="tab" id="faq-b2" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="Depende de lo que necesites: una landing no cuesta lo mismo que un CRM. Cuéntame tu caso y te preparo un presupuesto."><span>¿Cuánto cuesta?</span><span class="faq-flecha" aria-hidden="true"></span></button>
-          <button class="faq-btn" type="button" role="tab" id="faq-b3" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="Depende del tamaño del proyecto. Después de la primera conversación te doy un plazo concreto."><span>¿Cuánto tarda?</span><span class="faq-flecha" aria-hidden="true"></span></button>
-          <button class="faq-btn" type="button" role="tab" id="faq-b4" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="No. Te explico cómo usar y actualizar lo importante, paso a paso."><span>¿Tendré que saber programar para usarla?</span><span class="faq-flecha" aria-hidden="true"></span></button>
-          <button class="faq-btn" type="button" role="tab" id="faq-b5" aria-selected="false" aria-controls="faq-panel" tabindex="-1" data-resp="Sí. Cada web se diseña pensando en móvil, tablet y ordenador."><span>¿Se verá bien en el móvil?</span><span class="faq-flecha" aria-hidden="true"></span></button>
+        <!-- Cada respuesta se despliega justo debajo de su pregunta -->
+        <div class="faq-lista">
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" id="faq-b1" aria-expanded="true" aria-controls="faq-r1"><span>¿Qué necesito para empezar?</span><span class="faq-flecha" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-r1" role="region" aria-labelledby="faq-b1"><div class="faq-resp-in"><p>Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos.</p></div></div>
           </div>
-          <div class="faq-panel" id="faq-panel" role="tabpanel" aria-labelledby="faq-b1" tabindex="0">
-            <p class="faq-panel-q" id="faq-panel-q">¿Qué necesito para empezar?</p>
-            <p class="faq-panel-r" id="faq-panel-r">Solo una idea clara de lo que quieres conseguir. Si ya tienes logo, textos o fotos, vamos más rápido; si no, lo resolvemos juntos.</p>
-            <a href="#contacto" class="faq-panel-cta">¿Tienes otra duda? Escríbeme</a>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" id="faq-b2" aria-expanded="false" aria-controls="faq-r2"><span>¿Cuánto cuesta?</span><span class="faq-flecha" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-r2" role="region" aria-labelledby="faq-b2"><div class="faq-resp-in"><p>El precio depende de las páginas, las funciones y los plazos: una landing no cuesta lo mismo que un CRM. Te preparo un presupuesto cerrado y por escrito antes de empezar, sin sorpresas y sin compromiso.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" id="faq-b3" aria-expanded="false" aria-controls="faq-r3"><span>¿Cuánto tarda?</span><span class="faq-flecha" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-r3" role="region" aria-labelledby="faq-b3"><div class="faq-resp-in"><p>Una landing suele estar lista en 1–2 semanas y una web de varias páginas en 3–4. Un CRM o un panel de inventario lleva más. Tras la primera conversación te doy un plazo concreto por escrito.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" id="faq-b4" aria-expanded="false" aria-controls="faq-r4"><span>¿Tendré que saber programar para usarla?</span><span class="faq-flecha" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-r4" role="region" aria-labelledby="faq-b4"><div class="faq-resp-in"><p>No. Te explico cómo usar y actualizar lo importante, paso a paso.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <h3><button class="faq-btn" type="button" id="faq-b5" aria-expanded="false" aria-controls="faq-r5"><span>¿Se verá bien en el móvil?</span><span class="faq-flecha" aria-hidden="true"></span></button></h3>
+            <div class="faq-resp" id="faq-r5" role="region" aria-labelledby="faq-b5"><div class="faq-resp-in"><p>Sí. Cada web se diseña pensando en móvil, tablet y ordenador.</p></div></div>
           </div>
         </div>
+        <a href="#contacto" class="faq-cta">¿Tienes otra duda? Escríbeme</a>
       </div>
     </section>
 
     <!-- Contacto -->
     <section id="contacto" data-bg="wine" class="min-h-screen bg-wine text-cream flex flex-col px-6 pt-24">
       <div class="flex flex-1 flex-col items-center justify-center text-center">
-        <h2 id="contacto-frase" class="font-display text-5xl md:text-7xl font-extrabold tracking-tight max-w-4xl leading-[1.02] mb-12">Las grandes ideas empiezan en conversación</h2>
+        <h2 id="contacto-frase" class="font-display text-4xl md:text-6xl font-extrabold tracking-tight max-w-4xl leading-[1.02] mb-12">¿Papeles o Excel por todas partes? Hablemos</h2>
         <div id="contacto-botones" class="flex w-full max-w-md flex-col items-stretch gap-4 md:max-w-none md:w-auto md:flex-row md:items-center">
-          <a id="contacto-correo" href="mailto:sarayortizcordero4@gmail.com" class="contacto-boton hidden min-h-[44px] rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">Correo</a>
-          <a id="contacto-whatsapp" href="https://wa.me/34675843655" target="_blank" rel="noopener noreferrer" class="contacto-boton hidden min-h-[44px] rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">WhatsApp</a>
-          <a id="contacto-instagram" href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer" class="contacto-boton min-h-[44px] rounded-full bg-cream text-ink font-medium px-8 py-3 text-center hover:brightness-95">Instagram</a>
+          <a id="contacto-whatsapp" href="https://wa.me/34675843655" target="_blank" rel="noopener noreferrer" class="contacto-boton hidden min-h-[52px] rounded-full bg-cream text-ink font-semibold px-10 py-3.5 text-center text-lg hover:brightness-95">Escríbeme por WhatsApp</a>
+          <a id="contacto-correo" href="mailto:sarayortizcordero4@gmail.com" class="contacto-boton hidden min-h-[44px] rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center hover:bg-cream hover:text-wine">Escríbeme por correo</a>
+          <a id="contacto-instagram" href="https://www.instagram.com/ray.script/" target="_blank" rel="noopener noreferrer" class="contacto-boton min-h-[44px] rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center hover:bg-cream hover:text-wine">Instagram</a>
           <a id="contacto-cv" class="contacto-boton contacto-cv hidden min-h-[44px] rounded-full border-2 border-cream text-cream font-medium px-8 py-3 text-center">Descargar CV</a>
         </div>
+        <p class="mt-6 text-base opacity-90">Te respondo en menos de 24 horas.</p>
       </div>
       <footer class="pie">
         <div class="pie-grid">

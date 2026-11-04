@@ -49,7 +49,7 @@ button:focus-visible {
   font-weight: 800;
   line-height: 0.9;
   letter-spacing: -0.04em;
-  color: rgb(var(--c-ink) / 0.5);
+  color: rgb(var(--c-ink) / 0.7);
   white-space: nowrap;
 }
 
@@ -92,18 +92,6 @@ button:focus-visible {
 
 #menu.menu-oculto {
   translate: 0 -170%;
-}
-
-/* ---------- Barra de progreso ---------- */
-#progreso {
-  position: fixed;
-  inset: 0 0 auto 0;
-  height: 3px;
-  z-index: 60;
-  background: var(--wine);
-  transform-origin: left center;
-  transform: scaleX(0);
-  pointer-events: none;
 }
 
 /* ---------- Sobre mí: ficha de papel kraft con cinta ---------- */
@@ -172,8 +160,8 @@ button:focus-visible {
 }
 
 .servicio-texto {
-  max-width: 28rem;
-  font-size: 1.0625rem;
+  max-width: 30rem;
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 
@@ -342,29 +330,18 @@ img.ticket-img {
   padding: 0;
 }
 
+/* Etiqueta con el tipo de negocio: va en el flujo, debajo de la línea de corte, para no tapar la captura */
 .ticket-sello {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 2;
-  display: flex;
-  width: 5.75rem;
-  height: 5.75rem;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
+  align-self: flex-start;
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 0.9rem;
   border-radius: 999px;
   background: var(--sello-bg);
   color: var(--sello-fg);
-  outline: 1.5px dashed currentColor;
-  outline-offset: -5px;
   font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 800;
-  line-height: 1.1;
-  text-align: center;
-  rotate: 12deg;
-  transition: rotate 0.5s var(--ease-out);
+  line-height: 1.2;
 }
 
 /* línea de corte con muescas semicirculares: el color de las muescas es el del fondo de la sección */
@@ -417,21 +394,9 @@ img.ticket-img {
   .project-card { transition: rotate 0.5s var(--ease-out); }
 }
 
-@media (min-width: 768px) and (hover: hover) {
-  .project-card:hover .ticket-sello { rotate: -8deg; }
-}
-
 /* "Ver más": que .hidden de Tailwind gane siempre a display:flex de .ticket, sin depender del orden de carga */
 .project-card.hidden {
   display: none;
-}
-
-/* Móvil: los tickets se apilan como una baraja al hacer scroll (solo CSS) */
-@media (max-width: 767px) {
-  .project-card {
-    position: sticky;
-    top: calc(5.5rem + var(--i, 0) * 0.9rem);
-  }
 }
 
 /* ---------- Tecnologías: marquesina ---------- */
@@ -483,21 +448,15 @@ img.ticket-img {
   color: rgb(var(--c-cream) / 0.22);
 }
 
-/* ---------- Preguntas: la lista se queda quieta y la respuesta cambia en un panel ---------- */
-.faq-cuerpo {
-  display: grid;
-  gap: 2rem;
-  margin-top: 3rem;
-  align-items: start;
-}
-
-@media (min-width: 900px) {
-  .faq-cuerpo { grid-template-columns: 1.1fr 1fr; gap: 3rem; }
-}
-
+/* ---------- Preguntas: la respuesta se despliega debajo de la pregunta ---------- */
 .faq-lista {
-  display: grid;
+  max-width: 48rem;
+  margin-top: 3rem;
   border-top: 1px solid rgb(var(--c-ink) / 0.3);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgb(var(--c-ink) / 0.3);
 }
 
 .faq-btn {
@@ -508,7 +467,6 @@ img.ticket-img {
   justify-content: space-between;
   gap: 1.5rem;
   padding: 1rem 0.75rem;
-  border-bottom: 1px solid rgb(var(--c-ink) / 0.3);
   text-align: left;
   font-family: "Bricolage Grotesque", sans-serif;
   font-size: clamp(1.1rem, 2.2vw, 1.4rem);
@@ -521,7 +479,7 @@ img.ticket-img {
 
 .faq-btn:hover { background: rgb(var(--c-kraft) / 0.6); }
 
-.faq-btn[aria-selected="true"] {
+.faq-btn[aria-expanded="true"] {
   background: rgb(var(--c-ink));
   color: rgb(var(--c-cream));
 }
@@ -530,41 +488,41 @@ img.ticket-img {
   flex-shrink: 0;
   width: 0.7rem;
   height: 0.7rem;
-  border-top: 2px solid currentColor;
+  margin-right: 0.25rem;
   border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
   rotate: 45deg;
-  transition: translate 0.3s var(--ease-out);
+  translate: 0 -0.15rem;
+  transition: rotate 0.3s var(--ease-out), translate 0.3s var(--ease-out);
 }
 
-.faq-btn[aria-selected="true"] .faq-flecha { translate: 0.25rem 0; }
+.faq-btn[aria-expanded="true"] .faq-flecha {
+  rotate: 225deg;
+  translate: 0 0.15rem;
+}
 
-.faq-panel {
-  min-height: 16rem;
-  padding: 2rem;
-  border-radius: 1.5rem;
+/* Altura animada sin JS: la fila de la rejilla pasa de 0 a su contenido */
+.faq-resp {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease-out);
+}
+
+.faq-item.abierto .faq-resp { grid-template-rows: 1fr; }
+
+.faq-resp-in {
+  overflow: hidden;
   background: rgb(var(--c-kraft));
 }
 
-@media (min-width: 900px) {
-  .faq-panel { position: sticky; top: 7rem; }
-}
-
-.faq-panel-q {
-  margin-bottom: 1rem;
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-.faq-panel-r {
-  max-width: 30rem;
+.faq-resp-in p {
+  max-width: 36rem;
+  padding: 1.25rem 0.75rem 1.5rem;
   font-size: 1.125rem;
   line-height: 1.6;
 }
 
-.faq-panel-cta {
+.faq-cta {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -572,16 +530,6 @@ img.ticket-img {
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
-}
-
-.faq-panel.cambia .faq-panel-q,
-.faq-panel.cambia .faq-panel-r {
-  animation: faq-entra 0.45s var(--ease-out);
-}
-
-@keyframes faq-entra {
-  from { opacity: 0; translate: 0 0.5rem; }
-  to { opacity: 1; translate: 0 0; }
 }
 
 /* ---------- Táctil: respuesta inmediata al toque ---------- */
@@ -602,6 +550,7 @@ img.ticket-img {
   .servicio::before,
   .project-card,
   .faq-btn,
+  .faq-resp,
   .faq-flecha {
     transition: none;
   }

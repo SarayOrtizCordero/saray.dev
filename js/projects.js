@@ -11,6 +11,12 @@ function link(href, label, classes, aria) {
   return a;
 }
 
+// Texto del botón que abre el proyecto: "Ver web", "Ver tienda", "Ver CRM"… según su categoría
+function textoVer(p) {
+  var cat = (window.CATEGORIES || []).filter(function (c) { return c.id === p.cat; })[0];
+  return (cat && cat.ver) || 'Ver web';
+}
+
 function renderProjects(list) {
   var container = document.querySelector('#proyectos .cards');
   if (!container || !Array.isArray(list)) return;
@@ -49,16 +55,16 @@ function renderProjects(list) {
     marco.appendChild(ver);
     card.appendChild(marco);
 
-    // Sello con el tipo de negocio, pegado sobre la esquina de la imagen
-    var sello = document.createElement('span');
-    sello.className = 'ticket-sello';
-    sello.textContent = p.type;
-    card.appendChild(sello);
-
     var corte = document.createElement('div');
     corte.className = 'ticket-corte';
     corte.setAttribute('aria-hidden', 'true');
     card.appendChild(corte);
+
+    // Etiqueta con el tipo de negocio, bajo la línea de corte
+    var sello = document.createElement('span');
+    sello.className = 'ticket-sello';
+    sello.textContent = p.type;
+    card.appendChild(sello);
 
     var title = document.createElement('h3');
     title.className = 'ticket-nombre';
@@ -82,7 +88,7 @@ function renderProjects(list) {
     links.appendChild(caso);
 
     if (p.demo) {
-      links.appendChild(link(p.demo, 'Ver demo', 'ticket-btn', 'Ver demo de ' + p.name + ' (se abre en una pestaña nueva)'));
+      links.appendChild(link(p.demo, textoVer(p), 'ticket-btn', textoVer(p) + ': ' + p.name + ' (se abre en una pestaña nueva)'));
     }
     card.appendChild(links);
 
@@ -213,7 +219,11 @@ function initCaso(list) {
       el.stack.appendChild(li);
     });
     el.demo.hidden = !p.demo;
-    if (p.demo) { el.demo.href = p.demo; el.demo.setAttribute('aria-label', 'Ver demo de ' + p.name + ' (se abre en una pestaña nueva)'); }
+    if (p.demo) {
+      el.demo.href = p.demo;
+      el.demo.textContent = textoVer(p);
+      el.demo.setAttribute('aria-label', textoVer(p) + ': ' + p.name + ' (se abre en una pestaña nueva)');
+    }
     el.codigo.href = p.code;
     el.codigo.setAttribute('aria-label', 'Ver código de ' + p.name + ' en GitHub (se abre en una pestaña nueva)');
 

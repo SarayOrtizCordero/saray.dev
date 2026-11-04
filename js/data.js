@@ -5,10 +5,10 @@
   // Categorías del filtro de proyectos. Solo aparecen las que tienen al menos un proyecto:
   // cuando añadas un CRM o un panel de inventario, pon cat: 'crm' o cat: 'inventario' y saldrá su pestaña.
   window.CATEGORIES = [
-    { id: 'web', label: 'Webs' },
-    { id: 'tienda', label: 'Tienda online' },
-    { id: 'crm', label: 'CRM' },
-    { id: 'inventario', label: 'Inventario' }
+    { id: 'web', label: 'Webs', ver: 'Ver web' },
+    { id: 'tienda', label: 'Tienda online', ver: 'Ver tienda' },
+    { id: 'crm', label: 'CRM', ver: 'Ver CRM' },
+    { id: 'inventario', label: 'Inventario', ver: 'Ver panel' }
   ];
 
   // Campos: reto y hice alimentan la ventana "Ver caso" (borradores a partir de cada repositorio: revísalos).
@@ -50,7 +50,7 @@
       name: 'Serrano & Vega',
       type: 'Inmobiliaria',
       cat: 'web',
-      nota: 'Proyecto de demostración',
+      nota: 'Proyecto propio',
       image: 'assets/proyectos/serrano-vega.webp',
       description: 'Web de inmobiliaria con catálogo de propiedades filtrable y fichas con galería.',
       reto: 'Buscar piso tiene que ser rápido: filtrar por operación, tipo, barrio y precio, y ver cada inmueble sin salir de la página.',
@@ -62,7 +62,7 @@
       name: 'Café de la Esquina',
       type: 'Cafetería',
       cat: 'web',
-      nota: 'Plantilla de demostración',
+      nota: 'Proyecto propio',
       image: 'assets/proyectos/cafe-de-la-esquina.webp',
       description: 'Web de cafetería de barrio con carta, galería y contacto por WhatsApp.',
       reto: 'Un café de barrio necesita enseñar el local y la carta, y que escribir al negocio sea inmediato.',
@@ -74,7 +74,7 @@
       name: 'El Fogón Porteño',
       type: 'Restaurante',
       cat: 'web',
-      nota: 'Demo',
+      nota: 'Proyecto propio',
       image: 'assets/proyectos/fogon.webp',
       description: 'Web de restaurante de cocina argentina con carta, galería y reserva de mesa.',
       reto: 'Un restaurante vive de que la gente reserve: la carta y el botón de reserva tienen que estar siempre a mano.',
@@ -86,7 +86,7 @@
       name: 'Vortex Gym',
       type: 'Gimnasio',
       cat: 'web',
-      nota: 'Demo',
+      nota: 'Proyecto propio',
       image: 'assets/proyectos/vortex-gym.webp',
       description: 'Web de gimnasio con servicios, planes, galería y testimonios en diseño oscuro.',
       reto: 'Un gimnasio tiene que convencer rápido: servicios, planes y una llamada a apuntarse desde la primera pantalla.',

@@ -1,29 +1,25 @@
-/* Preguntas frecuentes: la lista de preguntas no se mueve; la respuesta cambia en el panel de al lado. */
+/* Preguntas frecuentes: la respuesta se despliega debajo de su pregunta; solo hay una abierta a la vez. */
 function initFaq() {
   var botones = Array.prototype.slice.call(document.querySelectorAll('.faq-btn'));
-  var panel = document.getElementById('faq-panel');
-  var q = document.getElementById('faq-panel-q');
-  var r = document.getElementById('faq-panel-r');
-  if (!botones.length || !panel || !q || !r) return;
+  if (!botones.length) return;
 
-  function elegir(boton) {
-    botones.forEach(function (b) {
-      var activo = b === boton;
-      b.setAttribute('aria-selected', String(activo));
-      b.tabIndex = activo ? 0 : -1;
-    });
-    q.textContent = boton.querySelector('span').textContent;
-    r.textContent = boton.dataset.resp;
-    panel.setAttribute('aria-labelledby', boton.id);
+  function abrir(boton, abrir) {
+    boton.setAttribute('aria-expanded', String(abrir));
+    boton.closest('.faq-item').classList.toggle('abierto', abrir);
+    var resp = document.getElementById(boton.getAttribute('aria-controls'));
+    // Una respuesta cerrada no debe poder leerse ni enfocarse; se oculta al terminar la animación
+    if (resp) resp.inert = !abrir;
+  }
 
-    // Reinicia la animación de entrada del texto (sin mover nada más de la página)
-    panel.classList.remove('cambia');
-    void panel.offsetWidth;
-    if (!window.reduceMotion) panel.classList.add('cambia');
+  function alternar(boton) {
+    var abierto = boton.getAttribute('aria-expanded') === 'true';
+    botones.forEach(function (b) { abrir(b, b === boton && !abierto); });
+    if (typeof ScrollTrigger !== 'undefined') setTimeout(function () { ScrollTrigger.refresh(); }, 450);
   }
 
   botones.forEach(function (b, i) {
-    b.addEventListener('click', function () { elegir(b); });
+    abrir(b, b.getAttribute('aria-expanded') === 'true');
+    b.addEventListener('click', function () { alternar(b); });
     b.addEventListener('keydown', function (e) {
       var destino = null;
       if (e.key === 'ArrowDown') destino = botones[(i + 1) % botones.length];
@@ -33,7 +29,6 @@ function initFaq() {
       if (!destino) return;
       e.preventDefault();
       destino.focus();
-      elegir(destino);
     });
   });
 }
