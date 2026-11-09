@@ -109,7 +109,7 @@ function initMotion() {
 
     // Botones magnéticos (solo con ratón)
     if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      var botones = gsap.utils.toArray('#hero-boton, #sobre-mi-boton, #proyectos-mas, .contacto-boton');
+      var botones = gsap.utils.toArray('#hero-boton, #sobre-mi-boton, .contacto-boton');
       botones.forEach(function (b) {
         var mx = gsap.quickTo(b, 'x', { duration: 0.5, ease: 'power3.out' });
         var my = gsap.quickTo(b, 'y', { duration: 0.5, ease: 'power3.out' });

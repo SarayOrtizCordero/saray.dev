@@ -12,8 +12,6 @@
     botonesTema.forEach(function (b) {
       b.setAttribute('aria-pressed', String(oscuro));
       b.setAttribute('aria-label', oscuro ? 'Activar modo claro' : 'Activar modo oscuro');
-      var t = b.querySelector('.tema-texto');
-      if (t) t.textContent = oscuro ? 'Modo claro' : 'Modo oscuro';
     });
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', oscuro ? '#1E1E22' : '#26262A');

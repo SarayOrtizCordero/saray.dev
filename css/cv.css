@@ -153,10 +153,11 @@ a:focus-visible, .boton:focus-visible { outline: 3px solid var(--wine); outline-
   html, body { background: #fff; }
   body { font-size: 9.2pt; line-height: 1.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .barra, .salto { display: none; }
-  .hoja { margin: 0; max-width: none; border-radius: 0; box-shadow: none; height: 296mm; }
-  .cuerpo { grid-template-columns: 72mm 1fr; height: 100%; }
+  /* min-height y no height: si el contenido no cabe, pasa a una segunda página en vez de recortarse */
+  .hoja { margin: 0; max-width: none; border-radius: 0; box-shadow: none; overflow: visible; min-height: 296mm; display: flex; flex-direction: column; }
+  .cuerpo { grid-template-columns: 72mm 1fr; flex: 1; }
   .principal { order: 0; padding: 12mm 11mm 8mm; gap: 5mm; }
-  .lateral { padding: 10mm 7mm; gap: 5mm; }
+  .lateral { padding: 8mm 7mm; gap: 4mm; }
   .contacto-movil { display: none; }
   .lateral h2 { font-size: 10.5pt; margin-bottom: 2.5mm; padding-bottom: 1.6mm; }
   .lateral h3 { font-size: 9.2pt; margin: 2.5mm 0 .5mm; }

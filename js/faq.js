@@ -3,12 +3,12 @@ function initFaq() {
   var botones = Array.prototype.slice.call(document.querySelectorAll('.faq-btn'));
   if (!botones.length) return;
 
-  function abrir(boton, abrir) {
-    boton.setAttribute('aria-expanded', String(abrir));
-    boton.closest('.faq-item').classList.toggle('abierto', abrir);
+  function abrir(boton, visible) {
+    boton.setAttribute('aria-expanded', String(visible));
+    boton.closest('.faq-item').classList.toggle('abierto', visible);
     var resp = document.getElementById(boton.getAttribute('aria-controls'));
     // Una respuesta cerrada no debe poder leerse ni enfocarse; se oculta al terminar la animación
-    if (resp) resp.inert = !abrir;
+    if (resp) resp.inert = !visible;
   }
 
   function alternar(boton) {

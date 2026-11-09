@@ -1,37 +1,13 @@
 function initContact() {
-  var data = window.CONTACT || {};
-
-  // Los enlaces se rellenan siempre, con o sin animación
-  var correo = document.getElementById('contacto-correo');
-  var whatsapp = document.getElementById('contacto-whatsapp');
-  var cv = document.getElementById('contacto-cv');
+  // Los enlaces de correo, WhatsApp y CV están escritos en index.html (única fuente de los datos de contacto)
   var anio = document.getElementById('contacto-anio');
-
-  // Los botones sin dato real siguen ocultos (clase hidden en el HTML) hasta que haya valor
-  if (correo && data.email && data.email !== 'CORREO_PENDIENTE') {
-    correo.setAttribute('href', 'mailto:' + data.email);
-    correo.classList.remove('hidden');
-  }
-  if (whatsapp && data.whatsapp && data.whatsapp !== 'WHATSAPP_PENDIENTE') {
-    // wa.me solo admite dígitos
-    var numero = String(data.whatsapp).replace(/\D/g, '');
-    if (numero) {
-      whatsapp.setAttribute('href', 'https://wa.me/' + numero);
-      whatsapp.classList.remove('hidden');
-    }
-  }
   if (anio) anio.textContent = new Date().getFullYear();
-
-  if (cv && data.cvEnabled) {
-    cv.setAttribute('href', 'cv.html');
-    cv.classList.remove('hidden');
-  }
 
   if (window.reduceMotion) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
   var frase = document.getElementById('contacto-frase');
-  var botones = gsap.utils.toArray('.contacto-boton:not(.hidden)');
+  var botones = gsap.utils.toArray('.contacto-boton');
   if (!frase) return;
 
   gsap.from(frase, {

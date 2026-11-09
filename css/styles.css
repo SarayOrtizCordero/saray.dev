@@ -394,9 +394,13 @@ img.ticket-img {
   .project-card { transition: rotate 0.5s var(--ease-out); }
 }
 
-/* "Ver más": que .hidden de Tailwind gane siempre a display:flex de .ticket, sin depender del orden de carga */
-.project-card.hidden {
-  display: none;
+/* Móvil: los tickets se apilan como una baraja al hacer scroll (solo CSS).
+   --i lo pone projects.js y cuenta solo las tarjetas visibles al filtrar. */
+@media (max-width: 767px) {
+  .project-card {
+    position: sticky;
+    top: calc(5.5rem + var(--i, 0) * 0.9rem);
+  }
 }
 
 /* ---------- Tecnologías: marquesina ---------- */

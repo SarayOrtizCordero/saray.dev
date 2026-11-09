@@ -12,9 +12,7 @@ function link(href, label, classes, aria) {
 }
 
 // Texto del botón que abre el proyecto (el mismo para todos los tipos)
-function textoVer() {
-  return 'Visitar';
-}
+var TEXTO_VISITAR = 'Visitar';
 
 function renderProjects(list) {
   var container = document.querySelector('#proyectos .cards');
@@ -87,7 +85,7 @@ function renderProjects(list) {
     links.appendChild(caso);
 
     if (p.demo) {
-      links.appendChild(link(p.demo, textoVer(p), 'ticket-btn', textoVer(p) + ': ' + p.name + ' (se abre en una pestaña nueva)'));
+      links.appendChild(link(p.demo, TEXTO_VISITAR, 'ticket-btn', TEXTO_VISITAR + ': ' + p.name + ' (se abre en una pestaña nueva)'));
     }
     card.appendChild(links);
 
@@ -137,7 +135,6 @@ function initFiltros(list) {
     b.dataset.filtro = t.id;
     b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
     b.tabIndex = i === 0 ? 0 : -1;
-    b.innerHTML = '';
     b.appendChild(document.createTextNode(t.label));
     var n = document.createElement('span');
     n.className = 'proy-tab-n';
@@ -220,8 +217,8 @@ function initCaso(list) {
     el.demo.hidden = !p.demo;
     if (p.demo) {
       el.demo.href = p.demo;
-      el.demo.textContent = textoVer(p);
-      el.demo.setAttribute('aria-label', textoVer(p) + ': ' + p.name + ' (se abre en una pestaña nueva)');
+      el.demo.textContent = TEXTO_VISITAR;
+      el.demo.setAttribute('aria-label', TEXTO_VISITAR + ': ' + p.name + ' (se abre en una pestaña nueva)');
     }
     el.codigo.href = p.code;
     el.codigo.setAttribute('aria-label', 'Ver código de ' + p.name + ' en GitHub (se abre en una pestaña nueva)');

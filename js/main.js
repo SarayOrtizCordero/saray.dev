@@ -1,7 +1,7 @@
 (function () {
   // Siempre se empieza arriba al recargar (salvo que la URL lleve un ancla): así las entradas animadas
   // se ven en orden y ningún bloque queda oculto por haber cargado con el scroll ya restaurado.
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  // (history.scrollRestoration = 'manual' ya se fija en el script del <head> de index.html)
   if (!location.hash) {
     window.scrollTo(0, 0);
     // El navegador puede restaurar el scroll al terminar de cargar: se vuelve a fijar arriba
@@ -49,6 +49,8 @@
       } else {
         target.scrollIntoView({ behavior: window.reduceMotion ? 'auto' : 'smooth' });
       }
+      // Los destinos con tabindex (como #contenido, para "Saltar al contenido") reciben el foco del teclado
+      if (target.hasAttribute('tabindex')) target.focus({ preventScroll: true });
     });
   });
 
@@ -71,7 +73,6 @@
     menuBoton.addEventListener('click', function () { setMenu(menuPanel.hidden); });
     menuPanel.addEventListener('click', function (e) {
       if (e.target.closest('a')) setMenu(false);
-      else if (e.target.closest('[data-cerrar-menu]')) { setMenu(false); menuBoton.focus(); }
     });
     if (menuFondo) menuFondo.addEventListener('click', function () { setMenu(false); });
     document.addEventListener('keydown', function (e) {
