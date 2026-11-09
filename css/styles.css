@@ -480,8 +480,8 @@ img.ticket-img {
 .faq-btn:hover { background: rgb(var(--c-kraft) / 0.6); }
 
 .faq-btn[aria-expanded="true"] {
-  background: rgb(var(--c-ink));
-  color: rgb(var(--c-cream));
+  background: var(--wine);
+  color: #F1E8DF;
 }
 
 .faq-flecha {
@@ -512,7 +512,6 @@ img.ticket-img {
 
 .faq-resp-in {
   overflow: hidden;
-  background: rgb(var(--c-kraft));
 }
 
 .faq-resp-in p {

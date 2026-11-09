@@ -1,0 +1,181 @@
+/* CV: página web y versión impresa (el PDF se genera desde aquí). Mismos colores y fuentes que el portfolio.
+   Diseño: lateral oscuro con contacto, tecnologías y habilidades; columna principal clara con perfil, experiencia y formación. */
+:root {
+  --ink: #26262A;
+  --cream: #F1E8DF;
+  --kraft: #E0D0BE;
+  --wine: #9E1030;
+  --papel: #FFFFFF;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+h1, h2, h3 { font-family: "Bricolage Grotesque", system-ui, sans-serif; margin: 0; }
+a { color: inherit; text-underline-offset: 3px; }
+a:focus-visible, .boton:focus-visible { outline: 3px solid var(--wine); outline-offset: 3px; border-radius: 6px; }
+.lateral a:focus-visible { outline-color: var(--cream); }
+
+.salto {
+  position: absolute; left: 1rem; top: -4rem; z-index: 10;
+  background: var(--ink); color: var(--cream); padding: .6rem 1rem; border-radius: 999px;
+}
+.salto:focus { top: 1rem; }
+
+/* Barra superior: volver y descargar */
+.barra {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  max-width: 62rem; margin: 0 auto; padding: 1rem 1.25rem;
+}
+.boton {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 44px;
+  padding: .6rem 1.5rem; border-radius: 999px; font-weight: 600; text-decoration: none;
+  border: 2px solid var(--wine); transition: background-color .2s ease, color .2s ease, filter .2s ease;
+}
+.boton-borde { border-color: var(--ink); color: var(--ink); }
+.boton-borde svg { transition: translate .2s ease; }
+.boton-borde:hover { background: var(--ink); color: var(--cream); }
+.boton-borde:hover svg { translate: -3px 0; }
+.boton-lleno { background: var(--wine); color: var(--cream); }
+.boton-lleno:hover { filter: brightness(1.1); }
+
+/* Hoja */
+.hoja {
+  max-width: 62rem; margin: 0 auto 3rem; background: var(--papel);
+  border-radius: 1.25rem; box-shadow: 0 10px 40px rgb(38 38 42 / .12); overflow: hidden;
+}
+.cuerpo { display: grid; }
+
+/* Lateral oscuro */
+.lateral {
+  background: var(--ink); color: var(--cream);
+  padding: 2rem 1.5rem; display: grid; gap: 1.9rem; align-content: start;
+}
+.lateral h2 {
+  font-size: 1.15rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--kraft); padding-bottom: .55rem; margin-bottom: 1rem; position: relative;
+}
+.lateral h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 2.5rem; height: 3px; background: var(--cream); border-radius: 2px; }
+.lateral h3 { font-size: .98rem; font-weight: 600; margin: 1rem 0 .25rem; color: var(--cream); }
+.lateral h3:first-of-type { margin-top: 0; }
+.comp { font-weight: 400; opacity: .75; font-size: .9em; }
+.lateral a { text-decoration: none; overflow-wrap: anywhere; }
+.lateral a:hover { text-decoration: underline; }
+.lateral .lista-simple { color: rgb(241 232 223 / .88); font-size: .95rem; }
+
+.contacto { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+.contacto li { display: flex; align-items: flex-start; gap: .7rem; font-size: .95rem; overflow-wrap: anywhere; }
+.contacto svg {
+  flex: none; width: 1.15rem; height: 1.15rem; margin-top: .2rem;
+  fill: none; stroke: var(--kraft); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.lista-simple { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+
+/* Tecnologías como etiquetas, una por herramienta */
+.tags { list-style: none; margin: .45rem 0 .6rem; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.tags li {
+  padding: .15rem .65rem; border-radius: 999px; font-size: .85rem; line-height: 1.4;
+  background: rgb(241 232 223 / .12); border: 1px solid rgb(241 232 223 / .28); color: var(--cream);
+}
+.lista-simple.puntos { gap: .3rem; margin-bottom: .6rem; }
+.lista-simple.puntos li { position: relative; padding-left: .9rem; }
+.lista-simple.puntos li::before { content: ""; position: absolute; left: 0; top: .6em; width: .35rem; height: .35rem; border-radius: 50%; background: var(--kraft); }
+
+/* Columna principal */
+.principal { padding: 2rem 1.5rem 2.25rem; display: grid; gap: 2rem; align-content: start; order: -1; } /* en móvil, antes que el lateral */
+.cabecera { padding-bottom: .25rem; }
+.cabecera h1 { font-size: clamp(2rem, 7vw, 3.1rem); font-weight: 800; letter-spacing: -.02em; line-height: 1.02; }
+.cargo { margin: .6rem 0 0; font-family: "Bricolage Grotesque", system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; color: var(--wine); }
+
+.principal h2 {
+  font-size: 1.55rem; font-weight: 800; letter-spacing: -.01em; text-transform: uppercase;
+  padding-bottom: .6rem; margin-bottom: 1.1rem; position: relative;
+}
+.principal h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 3.5rem; height: 4px; background: var(--wine); border-radius: 2px; }
+
+.principal p { margin: 0 0 .75rem; max-width: 70ch; }
+.item { margin-bottom: 1.35rem; }
+.item h3 { font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
+.item .meta { margin: .15rem 0 .35rem; font-weight: 600; color: var(--wine); font-size: .95rem; }
+.item p { margin: 0 0 .3rem; }
+.enlaces a { color: var(--wine); font-weight: 600; }
+.otra { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 .4rem; }
+.menor { font-size: .95rem; opacity: .85; }
+
+.solo-pdf, .contacto .solo-pdf { display: none; }
+.acciones-movil { display: none; }
+.principal h2, .item h3 { line-height: 1.15; }
+
+/* Móvil: cabecera oscura con nombre y acceso rápido; barra superior en una sola línea */
+@media screen and (max-width: 51.99rem) {
+  .barra { padding: .75rem 1rem; }
+  .barra .boton { padding: .5rem 1rem; font-size: .92rem; white-space: nowrap; }
+  .largo { display: none; }
+  .hoja { border-radius: 1rem 1rem 0 0; margin-bottom: 0; }
+  .principal { padding-top: 0; gap: 1.75rem; }
+  .cabecera {
+    display: flex; align-items: center; gap: 1rem;
+    background: var(--ink); color: var(--cream);
+    margin: 0 -1.5rem; padding: 1.5rem 1.5rem 1.6rem;
+  }
+  .cabecera h1 { font-size: 1.65rem; }
+  .cargo { margin-top: .3rem; font-size: 1.05rem; color: var(--kraft); }
+  .acciones-movil { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 0; }
+  .acciones-movil a {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem;
+    border: 2px solid rgb(241 232 223 / .8); border-radius: 999px;
+    font-weight: 600; font-size: .92rem; color: var(--cream); text-decoration: none;
+  }
+  .principal h2 { font-size: 1.3rem; margin-bottom: .9rem; }
+  .item h3 { font-size: 1.08rem; }
+  .lateral { padding: 1.75rem 1.5rem 2rem; gap: 1.6rem; }
+  .lateral h2 { font-size: 1.05rem; }
+}
+
+@media (min-width: 52rem) {
+  .barra { padding: 1.25rem 1.5rem; }
+  .cuerpo { grid-template-columns: 20rem 1fr; }
+  .lateral { padding: 2.5rem 1.75rem; }
+  .principal { padding: 2.75rem 2.75rem 3rem; order: 0; }
+}
+
+/* Versión impresa / PDF: una página A4, sin botones ni sombras, con la localidad */
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { background: #fff; }
+  body { font-size: 9.2pt; line-height: 1.38; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .barra, .salto { display: none; }
+  .hoja { margin: 0; max-width: none; border-radius: 0; box-shadow: none; height: 296mm; }
+  .cuerpo { grid-template-columns: 72mm 1fr; height: 100%; }
+  .principal { order: 0; padding: 12mm 11mm 8mm; gap: 5mm; }
+  .lateral { padding: 10mm 7mm; gap: 5mm; }
+  .acciones-movil { display: none; }
+  .lateral h2 { font-size: 10.5pt; margin-bottom: 2.5mm; padding-bottom: 1.6mm; }
+  .lateral h3 { font-size: 9.2pt; margin: 2.5mm 0 .5mm; }
+  .lateral .lista-simple { font-size: 8.6pt; }
+  .tags { gap: 1.2mm; margin: 1.5mm 0 2mm; }
+  .tags li { padding: .3mm 2.2mm; font-size: 7.9pt; }
+  .contacto { gap: 2.4mm; }
+  .contacto li { font-size: 8.8pt; }
+  .contacto svg { width: 4mm; height: 4mm; }
+  .cabecera h1 { font-size: 25pt; }
+  .cargo { font-size: 11.5pt; margin-top: 1.5mm; }
+  .principal h2 { font-size: 12.5pt; margin-bottom: 3mm; padding-bottom: 1.8mm; }
+  .item { margin-bottom: 3.5mm; break-inside: avoid; }
+  .item h3 { font-size: 10pt; }
+  .item .meta { font-size: 8.8pt; }
+  .principal p { margin-bottom: 1.8mm; }
+  .otra { font-size: 9.2pt; margin: 4mm 0 1mm; }
+  .menor { font-size: 8.6pt; }
+  .solo-pdf, .contacto .solo-pdf { display: flex; }
+  .enlaces a { color: var(--wine); }
+  a { text-decoration: none; }
+}

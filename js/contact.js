@@ -23,7 +23,7 @@ function initContact() {
   if (anio) anio.textContent = new Date().getFullYear();
 
   if (cv && data.cvEnabled) {
-    cv.setAttribute('href', 'assets/cv.pdf');
+    cv.setAttribute('href', 'cv.html');
     cv.classList.remove('hidden');
   }
 
