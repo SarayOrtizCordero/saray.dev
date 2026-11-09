@@ -19,11 +19,14 @@ Necesita un servidor estático (por ejemplo `npx http-server . -p 5173`) y conex
 npm install        # solo la primera vez
 npm run build:css  # regenera css/tailwind.css
 npm run build:cv   # regenera assets/cv-saray-ortiz.pdf desde cv.html
+npm run build:seo  # regenera los datos estructurados (JSON-LD) de index.html
 ```
 
 **Tailwind**: recompila cada vez que añadas o cambies clases de Tailwind en `index.html` o en `js/*.js` (las tarjetas de proyectos se crean desde JavaScript). La configuración (colores, fuentes y archivos que analiza) está en `tailwind.config.js`. Los colores `ink`, `cream` y `kraft` salen de variables CSS: así el modo oscuro cambia los colores sin tocar las clases. `cv.html` no usa Tailwind (tiene su propio `css/cv.css`).
 
 **CV**: `npm run build:cv` usa el Chrome o Edge instalado (o el que indique la variable `CHROME_PATH`) y falla si el CV no cabe en una página. Ejecútalo cada vez que cambies `cv.html` o `css/cv.css`, y sube el PDF junto con el cambio.
+
+**SEO**: `npm run build:seo` rellena el bloque `<script type="application/ld+json" id="datos-estructurados">` de `index.html` con tus datos (`Person`, `ProfessionalService` y la lista de proyectos de `js/data.js`, además del correo y teléfono del HTML). Ejecútalo al añadir un proyecto o cambiar los datos de contacto; no edites ese bloque a mano. El título, la descripción y el H1 (atributo `data-sr` de `#hero-nombre`) están en `index.html`.
 
 ## Estructura
 
@@ -40,6 +43,7 @@ js/interfaz.js      Tema, sección activa en el menú, volver arriba, transició
 js/main.js          Scroll suave, menú móvil, fondo por sección, arranque
 js/*.js             Una animación por sección
 scripts/build-cv.js Genera el PDF del CV
+scripts/build-seo.js Genera los datos estructurados de index.html
 assets/             Foto, capturas de proyectos (assets/proyectos), imagen para redes (og.jpg) y PDF del CV
 src/input.css       Entrada de Tailwind
 robots.txt, sitemap.xml

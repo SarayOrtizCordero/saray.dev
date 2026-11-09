@@ -85,6 +85,12 @@ button:focus-visible {
   will-change: transform;
 }
 
+/* El texto visible sale del atributo (no es texto real): ver splitText en js/motion.js */
+.sp-inner::before,
+.sp-char::before {
+  content: attr(data-c);
+}
+
 /* ---------- Menú: se oculta al bajar. `translate` se suma al transform de Tailwind. ---------- */
 #menu {
   transition: translate 0.45s var(--ease-out);

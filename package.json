@@ -5,7 +5,8 @@
   "description": "Portfolio web de Saray (HTML + Tailwind + GSAP + Lenis)",
   "scripts": {
     "build:css": "tailwindcss -c tailwind.config.js -i ./src/input.css -o ./css/tailwind.css --minify",
-    "build:cv": "node scripts/build-cv.js"
+    "build:cv": "node scripts/build-cv.js",
+    "build:seo": "node scripts/build-seo.js"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"

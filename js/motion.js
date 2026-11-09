@@ -1,16 +1,18 @@
-/* Divide un texto en palabras (o letras) con máscara. Conserva el texto accesible con aria-label. */
+/* Divide un texto en palabras (o letras) con máscara. Las piezas visibles se pintan con CSS (data-c + ::before),
+   así que el único texto real del elemento es la copia legible: lectores de pantalla y buscadores lo leen una sola vez.
+   Con data-sr en el elemento, esa copia puede ser más descriptiva que lo que se ve (p. ej. el H1 del hero). */
 function splitText(el, mode) {
   if (!el) return null;
   if (el._split) return el._split;
 
   var text = el.textContent.replace(/\s+/g, ' ').trim();
+  var lecturaTexto = el.dataset.sr || text;
   el.textContent = '';
 
-  // Copia legible solo para lectores de pantalla (aria-label no sirve en párrafos);
-  // las palabras visibles se ocultan a la tecnología de asistencia para no leerlas dos veces
+  // Copia legible (aria-label no sirve en párrafos); las piezas visibles se ocultan a la tecnología de asistencia
   var lectura = document.createElement('span');
   lectura.className = 'sr-only';
-  lectura.textContent = text;
+  lectura.textContent = lecturaTexto;
   el.appendChild(lectura);
 
   var words = [];
@@ -25,14 +27,14 @@ function splitText(el, mode) {
       w.split('').forEach(function (c) {
         var ch = document.createElement('span');
         ch.className = 'sp-char';
-        ch.textContent = c;
+        ch.dataset.c = c;
         mask.appendChild(ch);
         chars.push(ch);
       });
     } else {
       var inner = document.createElement('span');
       inner.className = 'sp-inner';
-      inner.textContent = w;
+      inner.dataset.c = w;
       mask.appendChild(inner);
     }
     el.appendChild(mask);
