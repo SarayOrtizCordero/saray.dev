@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saraydev-rouge.vercel.app/sitemap.xml
+Sitemap: https://saraydev.vercel.app/sitemap.xml

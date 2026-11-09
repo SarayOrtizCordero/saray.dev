@@ -54,7 +54,7 @@ docs/, .superpowers/   Solo documentación interna y material de origen (no se s
 
 - **Proyectos**: `js/data.js`. Cada proyecto lleva `cat` (`web`, `tienda`, `gestion`, `crm`, `inventario`): la pestaña de filtro aparece sola cuando hay proyectos de esa categoría. Los textos `reto` y `hice` alimentan la ventana "Ver detalles".
 - **Correo, WhatsApp y CV**: los `href` de `index.html` (botones de Contacto y pie). `cv.html` lleva su propio contacto.
-- **Dirección pública**: `site.json` (ahora `https://saraydev-rouge.vercel.app/`) y `npm run build:seo`. La copia en GitHub Pages sigue funcionando, pero su canonical apunta a la de Vercel. Si cambias de dirección o compras un dominio propio, cambia `site.json`, ejecuta `npm run build:seo` y regenera la imagen para redes (lleva la dirección escrita).
+- **Dirección pública**: `site.json` (ahora `https://saraydev.vercel.app/`) y `npm run build:seo`. La copia en GitHub Pages sigue funcionando, pero su canonical apunta a la de Vercel. Si cambias de dirección o compras un dominio propio, cambia `site.json`, ejecuta `npm run build:seo` y regenera la imagen para redes (lleva la dirección escrita).
 - **Imagen para redes**: `assets/og.jpg` (1200×630, unos 50 KB; las redes muestran la vista previa grande solo si pesa menos de ~300 KB). El original sin comprimir está en `docs/fuentes/og.png`; se dibuja con `docs/og.html` (edita ahí la dirección del pie).
 
 ## Publicar
