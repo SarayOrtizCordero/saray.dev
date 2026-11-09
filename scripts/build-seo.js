@@ -1,20 +1,54 @@
-/* Genera los datos estructurados (JSON-LD) de index.html a partir de js/data.js y de los datos de contacto del propio HTML.
-   Uso: npm run build:seo. Ejecútalo al cambiar proyectos o datos de contacto.
-   Escribe dentro de <script type="application/ld+json" id="datos-estructurados"> y no toca nada más. */
+/* SEO: propaga la dirección pública de site.json y genera los datos estructurados.
+   Uso: npm run build:seo. Ejecútalo al cambiar de dirección, añadir un proyecto o cambiar los datos de contacto.
+   Actualiza: canonical, og:url, og:image y twitter:image de index.html y cv.html; robots.txt; sitemap.xml;
+   y el bloque <script type="application/ld+json" id="datos-estructurados"> de index.html (desde js/data.js). */
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
 const raiz = path.resolve(__dirname, '..');
-const rutaHtml = path.join(raiz, 'index.html');
-const SITIO = 'https://sarayortizcordero.github.io/saray.dev/';
+const ruta = function (f) { return path.join(raiz, f); };
 
+// Dirección pública, siempre con barra final
+const SITIO = JSON.parse(fs.readFileSync(ruta('site.json'), 'utf8')).url.replace(/\/*$/, '/');
+
+// Sustituye el atributo de una etiqueta <head> y falla si no la encuentra (para no dejar una dirección antigua)
+function fijar(html, archivo, patron, valor) {
+  if (!patron.test(html)) {
+    console.error('No encuentro ' + patron + ' en ' + archivo + '.');
+    process.exit(1);
+  }
+  return html.replace(patron, function (_, a, b) { return a + valor + b; });
+}
+
+function sincronizarCabecera(archivo, pagina) {
+  let html = fs.readFileSync(ruta(archivo), 'utf8');
+  html = fijar(html, archivo, /(<link rel="canonical" href=")[^"]*(")/, SITIO + pagina);
+  html = fijar(html, archivo, /(<meta property="og:url" content=")[^"]*(")/, SITIO + pagina);
+  html = fijar(html, archivo, /(<meta property="og:image" content=")[^"]*(")/, SITIO + 'assets/og.jpg');
+  html = fijar(html, archivo, /(<meta name="twitter:image" content=")[^"]*(")/, SITIO + 'assets/og.jpg');
+  return html;
+}
+
+// ------------------------------------------------------------------ cv.html
+fs.writeFileSync(ruta('cv.html'), sincronizarCabecera('cv.html', 'cv.html'));
+
+// ------------------------------------------------------- robots.txt y sitemap
+fs.writeFileSync(ruta('robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: ' + SITIO + 'sitemap.xml\n');
+fs.writeFileSync(ruta('sitemap.xml'),
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  '  <url>\n    <loc>' + SITIO + '</loc>\n  </url>\n' +
+  '  <url>\n    <loc>' + SITIO + 'cv.html</loc>\n  </url>\n' +
+  '</urlset>\n');
+
+// ---------------------------------------------------------------- index.html
 // js/data.js escribe en window.PROJECTS: se ejecuta con un window de pega
 const ventana = {};
-vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js', 'data.js'), 'utf8'), { window: ventana });
+vm.runInNewContext(fs.readFileSync(ruta('js/data.js'), 'utf8'), { window: ventana });
 const proyectos = ventana.PROJECTS || [];
 
-let html = fs.readFileSync(rutaHtml, 'utf8');
+let html = sincronizarCabecera('index.html', '');
 const correo = (html.match(/href="mailto:([^"]+)"/) || [])[1];
 const telefono = (html.match(/href="https:\/\/wa\.me\/(\d+)"/) || [])[1];
 const redes = Array.from(html.matchAll(/href="(https:\/\/(?:github\.com|www\.instagram\.com)\/[^"]+)"/g)).map(function (m) { return m[1]; });
@@ -87,5 +121,5 @@ if (inicio === -1 || fin === -1) {
 }
 
 html = html.slice(0, inicio + abre.length) + '\n' + JSON.stringify(grafo, null, 2) + '\n  ' + html.slice(fin);
-fs.writeFileSync(rutaHtml, html);
-console.log('Datos estructurados actualizados: ' + proyectos.length + ' proyectos, ' + sameAs.length + ' perfiles.');
+fs.writeFileSync(ruta('index.html'), html);
+console.log('SEO actualizado para ' + SITIO + ' (' + proyectos.length + ' proyectos, ' + sameAs.length + ' perfiles).');

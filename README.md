@@ -19,14 +19,14 @@ Necesita un servidor estático (por ejemplo `npx http-server . -p 5173`) y conex
 npm install        # solo la primera vez
 npm run build:css  # regenera css/tailwind.css
 npm run build:cv   # regenera assets/cv-saray-ortiz.pdf desde cv.html
-npm run build:seo  # regenera los datos estructurados (JSON-LD) de index.html
+npm run build:seo  # propaga la dirección pública (site.json) y regenera los datos estructurados
 ```
 
 **Tailwind**: recompila cada vez que añadas o cambies clases de Tailwind en `index.html` o en `js/*.js` (las tarjetas de proyectos se crean desde JavaScript). La configuración (colores, fuentes y archivos que analiza) está en `tailwind.config.js`. Los colores `ink`, `cream` y `kraft` salen de variables CSS: así el modo oscuro cambia los colores sin tocar las clases. `cv.html` no usa Tailwind (tiene su propio `css/cv.css`).
 
 **CV**: `npm run build:cv` usa el Chrome o Edge instalado (o el que indique la variable `CHROME_PATH`) y falla si el CV no cabe en una página. Ejecútalo cada vez que cambies `cv.html` o `css/cv.css`, y sube el PDF junto con el cambio.
 
-**SEO**: `npm run build:seo` rellena el bloque `<script type="application/ld+json" id="datos-estructurados">` de `index.html` con tus datos (`Person`, `ProfessionalService` y la lista de proyectos de `js/data.js`, además del correo y teléfono del HTML). Ejecútalo al añadir un proyecto o cambiar los datos de contacto; no edites ese bloque a mano. El título, la descripción y el H1 (atributo `data-sr` de `#hero-nombre`) están en `index.html`.
+**SEO**: `npm run build:seo` lee la dirección pública de `site.json` y actualiza `canonical`, `og:url`, `og:image` y `twitter:image` de `index.html` y `cv.html`, además de `robots.txt` y `sitemap.xml`. También rellena el bloque `<script type="application/ld+json" id="datos-estructurados">` de `index.html` con tus datos (`Person`, `ProfessionalService` y la lista de proyectos de `js/data.js`, más el correo y teléfono del HTML). Ejecútalo al cambiar de dirección, añadir un proyecto o cambiar los datos de contacto; no edites a mano esas etiquetas ni ese bloque. El título, la descripción y el H1 (atributo `data-sr` de `#hero-nombre`) están en `index.html`.
 
 ## Estructura
 
@@ -54,8 +54,8 @@ docs/, .superpowers/   Solo documentación interna y material de origen (no se s
 
 - **Proyectos**: `js/data.js`. Cada proyecto lleva `cat` (`web`, `tienda`, `gestion`, `crm`, `inventario`): la pestaña de filtro aparece sola cuando hay proyectos de esa categoría. Los textos `reto` y `hice` alimentan la ventana "Ver detalles".
 - **Correo, WhatsApp y CV**: los `href` de `index.html` (botones de Contacto y pie). `cv.html` lleva su propio contacto.
-- **Dirección pública** (vista previa al compartir): `canonical`, `og:url`, `og:image` y `twitter:image` en el `<head>` de `index.html` y de `cv.html`, más `robots.txt` y `sitemap.xml`. Ahora apuntan a `https://sarayortizcordero.github.io/saray.dev/`.
-- **Imagen para redes**: `assets/og.jpg` (1200×630, unos 50 KB; las redes muestran la vista previa grande solo si pesa menos de ~300 KB). El original sin comprimir está en `docs/fuentes/og.png` (se genera con `docs/og.html`).
+- **Dirección pública**: `site.json` (ahora `https://saraydev-rouge.vercel.app/`) y `npm run build:seo`. La copia en GitHub Pages sigue funcionando, pero su canonical apunta a la de Vercel. Si cambias de dirección o compras un dominio propio, cambia `site.json`, ejecuta `npm run build:seo` y regenera la imagen para redes (lleva la dirección escrita).
+- **Imagen para redes**: `assets/og.jpg` (1200×630, unos 50 KB; las redes muestran la vista previa grande solo si pesa menos de ~300 KB). El original sin comprimir está en `docs/fuentes/og.png`; se dibuja con `docs/og.html` (edita ahí la dirección del pie).
 
 ## Publicar
 

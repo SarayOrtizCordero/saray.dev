@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sarayortizcordero.github.io/saray.dev/sitemap.xml
+Sitemap: https://saraydev-rouge.vercel.app/sitemap.xml
