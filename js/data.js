@@ -7,6 +7,7 @@
   window.CATEGORIES = [
     { id: 'web', label: 'Webs', ver: 'Ver web' },
     { id: 'tienda', label: 'Tienda online', ver: 'Ver tienda' },
+    { id: 'gestion', label: 'Gestión', ver: 'Ver herramienta' },
     { id: 'crm', label: 'CRM', ver: 'Ver CRM' },
     { id: 'inventario', label: 'Inventario', ver: 'Ver panel' }
   ];
@@ -19,6 +20,18 @@
   }
 
   window.PROJECTS = [
+    proyecto({
+      id: 'administracion-autores-contratos',
+      name: 'Autores y contratos',
+      type: 'Editorial',
+      cat: 'gestion',
+      nota: 'Proyecto propio',
+      image: 'assets/proyectos/autores-contratos.webp',
+      description: 'Herramienta para que una editorial gestione autores, contratos, anticipos y liquidaciones de royalties.',
+      reto: 'Una editorial necesita saber qué contrato vence pronto, cuánto del anticipo está recuperado y qué hay que liquidar a cada autor, sin depender de hojas de cálculo.',
+      hice: 'Diseñé y programé la herramienta con HTML, CSS y JavaScript puros, sin frameworks: lista de autores con semáforo de vencimientos, ficha con contratos, anticipos y liquidaciones, cálculo de royalties paso a paso con reparto entre coautores, correo simulado y tema claro y oscuro. Funciona con datos de ejemplo y la lógica de negocio tiene pruebas automáticas.',
+      stack: ['HTML', 'CSS', 'JavaScript', 'Node']
+    }),
     proyecto({
       id: 'chapterandbloom.shop',
       name: 'Chapter & Bloom',

@@ -111,7 +111,7 @@ a:focus-visible, .boton:focus-visible { outline: 3px solid var(--wine); outline-
 .menor { font-size: .95rem; opacity: .85; }
 
 .solo-pdf, .contacto .solo-pdf { display: none; }
-.acciones-movil { display: none; }
+.contacto-movil { display: none; }
 .principal h2, .item h3 { line-height: 1.15; }
 
 /* Móvil: cabecera oscura con nombre y acceso rápido; barra superior en una sola línea */
@@ -119,7 +119,8 @@ a:focus-visible, .boton:focus-visible { outline: 3px solid var(--wine); outline-
   .barra { padding: .75rem 1rem; }
   .barra .boton { padding: .5rem 1rem; font-size: .92rem; white-space: nowrap; }
   .largo { display: none; }
-  .hoja { border-radius: 1rem 1rem 0 0; margin-bottom: 0; }
+  /* La hoja se ve como una página sobre el fondo, con márgenes y sombra */
+  .hoja { margin: 0 .75rem 1.75rem; border-radius: .75rem; box-shadow: 0 10px 30px rgb(38 38 42 / .22); }
   .principal { padding-top: 0; gap: 1.75rem; }
   .cabecera {
     display: flex; align-items: center; gap: 1rem;
@@ -128,12 +129,11 @@ a:focus-visible, .boton:focus-visible { outline: 3px solid var(--wine); outline-
   }
   .cabecera h1 { font-size: 1.65rem; }
   .cargo { margin-top: .3rem; font-size: 1.05rem; color: var(--kraft); }
-  .acciones-movil { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0 0; }
-  .acciones-movil a {
-    display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem;
-    border: 2px solid rgb(241 232 223 / .8); border-radius: 999px;
-    font-weight: 600; font-size: .92rem; color: var(--cream); text-decoration: none;
-  }
+  .contacto-movil { display: grid; gap: 0; margin-top: 1rem; }
+  .contacto-movil li { gap: .75rem; font-size: .95rem; }
+  .contacto-movil a { display: flex; align-items: center; min-height: 44px; text-decoration: none; overflow-wrap: anywhere; }
+  .contacto-movil svg { margin-top: 0; align-self: center; }
+  .seccion-contacto { display: none; }
   .principal h2 { font-size: 1.3rem; margin-bottom: .9rem; }
   .item h3 { font-size: 1.08rem; }
   .lateral { padding: 1.75rem 1.5rem 2rem; gap: 1.6rem; }
@@ -157,7 +157,7 @@ a:focus-visible, .boton:focus-visible { outline: 3px solid var(--wine); outline-
   .cuerpo { grid-template-columns: 72mm 1fr; height: 100%; }
   .principal { order: 0; padding: 12mm 11mm 8mm; gap: 5mm; }
   .lateral { padding: 10mm 7mm; gap: 5mm; }
-  .acciones-movil { display: none; }
+  .contacto-movil { display: none; }
   .lateral h2 { font-size: 10.5pt; margin-bottom: 2.5mm; padding-bottom: 1.6mm; }
   .lateral h3 { font-size: 9.2pt; margin: 2.5mm 0 .5mm; }
   .lateral .lista-simple { font-size: 8.6pt; }
