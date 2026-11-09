@@ -5,14 +5,14 @@
   // Categorías del filtro de proyectos. Solo aparecen las que tienen al menos un proyecto:
   // cuando añadas un CRM o un panel de inventario, pon cat: 'crm' o cat: 'inventario' y saldrá su pestaña.
   window.CATEGORIES = [
-    { id: 'web', label: 'Webs', ver: 'Ver web' },
-    { id: 'tienda', label: 'Tienda online', ver: 'Ver tienda' },
-    { id: 'gestion', label: 'Gestión', ver: 'Ver herramienta' },
-    { id: 'crm', label: 'CRM', ver: 'Ver CRM' },
-    { id: 'inventario', label: 'Inventario', ver: 'Ver panel' }
+    { id: 'web', label: 'Webs' },
+    { id: 'tienda', label: 'Tienda online' },
+    { id: 'gestion', label: 'Gestión' },
+    { id: 'crm', label: 'CRM' },
+    { id: 'inventario', label: 'Inventario' }
   ];
 
-  // Campos: reto y hice alimentan la ventana "Ver caso" (borradores a partir de cada repositorio: revísalos).
+  // Campos: reto y hice alimentan la ventana "Ver detalles" (borradores a partir de cada repositorio: revísalos).
   function proyecto(p) {
     p.code = p.code || 'https://github.com/' + USER + '/' + p.id;
     p.demo = p.demo === undefined ? PAGES + p.id + '/' : p.demo;

@@ -11,10 +11,9 @@ function link(href, label, classes, aria) {
   return a;
 }
 
-// Texto del botón que abre el proyecto: "Ver web", "Ver tienda", "Ver CRM"… según su categoría
-function textoVer(p) {
-  var cat = (window.CATEGORIES || []).filter(function (c) { return c.id === p.cat; })[0];
-  return (cat && cat.ver) || 'Ver web';
+// Texto del botón que abre el proyecto (el mismo para todos los tipos)
+function textoVer() {
+  return 'Visitar';
 }
 
 function renderProjects(list) {
@@ -29,7 +28,7 @@ function renderProjects(list) {
     card.dataset.cat = p.cat || 'web';
     card.style.setProperty('--i', index);
 
-    // Marco de la imagen: la captura (o un recuadro con el nombre si aún no hay) + chip "Ver caso"
+    // Marco de la imagen: la captura (o un recuadro con el nombre si aún no hay) + chip "Ver detalles"
     var marco = document.createElement('div');
     marco.className = 'ticket-marco';
     if (p.image) {
@@ -51,7 +50,7 @@ function renderProjects(list) {
     var ver = document.createElement('span');
     ver.className = 'ticket-ver';
     ver.setAttribute('aria-hidden', 'true');
-    ver.textContent = 'Ver caso';
+    ver.textContent = 'Ver detalles';
     marco.appendChild(ver);
     card.appendChild(marco);
 
@@ -83,8 +82,8 @@ function renderProjects(list) {
     caso.type = 'button';
     caso.className = 'ticket-btn ticket-btn-lleno';
     caso.dataset.caso = p.id;
-    caso.textContent = 'Ver caso';
-    caso.setAttribute('aria-label', 'Ver el caso de ' + p.name);
+    caso.textContent = 'Ver detalles';
+    caso.setAttribute('aria-label', 'Ver detalles de ' + p.name);
     links.appendChild(caso);
 
     if (p.demo) {
@@ -258,7 +257,7 @@ function initCaso(list) {
 
   function porId(id) { return list.filter(function (p) { return p.id === id; })[0]; }
 
-  // El botón "Ver caso" es el control accesible; con ratón también se puede pulsar el ticket entero
+  // El botón "Ver detalles" es el control accesible; con ratón también se puede pulsar el ticket entero
   document.querySelectorAll('#proyectos .project-card').forEach(function (card) {
     var p = porId(card.dataset.id);
     if (!p) return;
